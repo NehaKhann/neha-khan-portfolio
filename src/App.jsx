@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon } from "lucide-react";
 import { profile, getYearsOfExperience, getHeroStats, experience, projects, certifications, education, articles, skillGroups } from "./data.js";
+import { TechTag } from "./techIcons.jsx";
 
 const themes = {
   dark: {
@@ -56,6 +57,9 @@ const styles = `
                 radial-gradient(ellipse 45% 40% at 80% 60%, rgba(52,214,196,0.14), transparent 60%);
   }
   .nk-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     font-size: 0.75rem;
     padding: 3px 10px;
     border-radius: 20px;
@@ -295,14 +299,14 @@ export default function Portfolio() {
       <main id="main-content">
       {/* HERO */}
       <section className="nk-glow-violet" style={{ position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "-8%", right: "-6%", width: "56%", height: "120%", opacity: 0.9, pointerEvents: "none" }} className="hidden md:block">
+        <div style={{ position: "absolute", top: "-8%", right: "-6%", width: "56%", height: "120%", opacity: 0.9, pointerEvents: "none" }} className="hidden lg:block">
           <NetworkGraphic />
         </div>
         <div className="max-w-6xl mx-auto px-6 pt-24 pb-28 md:pt-32 md:pb-36" style={{ position: "relative" }}>
           <div className="inline-flex items-center gap-2 nk-mono text-xs mb-7" style={{ color: "var(--teal)", border: "1px solid rgba(52,214,196,0.3)", background: "var(--teal-soft)", padding: "6px 14px", borderRadius: "20px" }}>
             <span className="nk-dot" /> Open to full-stack &amp; AI engineering roles
           </div>
-          <h1 className="nk-sans" style={{ fontSize: "clamp(2.6rem, 6vw, 4.6rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.05, maxWidth: "16ch", color: "var(--text)" }}>
+          <h1 className="nk-sans" style={{ fontSize: "clamp(2.6rem, 6vw, 4.6rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.05, maxWidth: "min(13ch, 560px)", color: "var(--text)" }}>
             Engineering systems.<br />Now teaching them to think.
           </h1>
           <p className="mt-7 max-w-lg" style={{ color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
@@ -391,7 +395,7 @@ export default function Portfolio() {
                     ))}
                   </ul>
                   <div className="flex flex-wrap gap-2">
-                    {job.tags.map((t) => <span key={t} className="nk-tag">{t}</span>)}
+                    {job.tags.map((t) => <TechTag key={t} label={t} />)}
                   </div>
                 </div>
               </Reveal>
@@ -419,7 +423,7 @@ export default function Portfolio() {
                 </div>
                 <p className="text-sm mb-5" style={{ color: "var(--text-dim)", lineHeight: 1.65, maxWidth: p.size === "lg" ? "60ch" : "none" }}>{p.tagline}</p>
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {p.tags.map((t) => <span key={t} className={`nk-tag ${t.includes("AI") ? "nk-tag-ai" : ""}`}>{t}</span>)}
+                  {p.tags.map((t) => <TechTag key={t} label={t} className={t.includes("AI") ? "nk-tag-ai" : ""} />)}
                 </div>
                 <div className="flex gap-5 text-sm">
                   <a href={p.github} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-1.5 font-medium" style={{ color: "var(--text)" }}>
@@ -452,7 +456,7 @@ export default function Portfolio() {
                 <div className="nk-glass nk-card" style={{ borderRadius: "12px", padding: "1.5rem", height: "100%" }}>
                   <h3 className="text-sm font-semibold mb-3" style={{ color: g.ai ? "var(--teal)" : "var(--text)" }}>{g.label}</h3>
                   <div className="flex flex-wrap gap-1.5">
-                    {g.items.map((item) => <span key={item} className="nk-tag">{item}</span>)}
+                    {g.items.map((item) => <TechTag key={item} label={item} />)}
                   </div>
                 </div>
               </Reveal>
