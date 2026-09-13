@@ -366,8 +366,8 @@ export default function Portfolio() {
           <div className="inline-flex items-center gap-2 nk-mono text-xs mb-7" style={{ color: "var(--teal)", border: "1px solid rgba(52,214,196,0.3)", background: "var(--teal-soft)", padding: "6px 14px", borderRadius: "20px" }}>
             <span className="nk-dot" /> Open to full-stack &amp; AI engineering roles
           </div>
-          <h1 className="nk-sans" style={{ fontSize: "clamp(2.6rem, 6vw, 4.6rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.05, maxWidth: "min(13ch, 560px)", color: "var(--text)" }}>
-            Engineering systems.<br />Now teaching them to think.
+          <h1 className="nk-sans" style={{ fontSize: "clamp(2.4rem, 5.2vw, 4.1rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: "min(18ch, 640px)", color: "var(--text)" }}>
+            Software Engineer.<br />Now expanding into AI Engineering.
           </h1>
           <p className="mt-7 max-w-lg" style={{ color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
             {yearsExp}+ years building production backend systems — now going deep on LLM fine-tuning,
