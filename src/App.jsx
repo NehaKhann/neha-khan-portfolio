@@ -37,8 +37,8 @@ const styles = `
     --teal: #34D6C4;
     --teal-soft: rgba(52,214,196,0.12);
   }
-  .nk-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-  .nk-sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; }
+  .nk-mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .nk-sans { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-feature-settings: "cv11", "ss01"; }
   .nk-root { background: var(--bg); color: var(--text); transition: background 0.3s ease, color 0.3s ease; }
   .nk-glass {
     background: var(--bg-elev);
