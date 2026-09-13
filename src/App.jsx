@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon } from "lucide-react";
-import { profile, heroStats, experience, projects, certifications, education, articles, skillGroups } from "./data.js";
+import { profile, getYearsOfExperience, getHeroStats, experience, projects, certifications, education, articles, skillGroups } from "./data.js";
 
 const themes = {
   dark: {
@@ -141,9 +141,17 @@ function Reveal({ children, className = "", delay = 0 }) {
   );
 }
 
-function NavLink({ href, children, onClick, className = "" }) {
+function NavLink({ href, children, onClick, className = "", active = false }) {
   return (
-    <a href={href} onClick={onClick} className={`nk-sans nk-link text-sm ${className}`}>{children}</a>
+    <a
+      href={href}
+      onClick={onClick}
+      className={`nk-sans nk-link text-sm ${className}`}
+      style={active ? { color: "var(--text)" } : undefined}
+      aria-current={active ? "true" : undefined}
+    >
+      {children}
+    </a>
   );
 }
 
@@ -203,20 +211,48 @@ function getInitialTheme() {
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
+  const [activeSection, setActiveSection] = useState("about");
   useEffect(() => { document.body.style.margin = "0"; }, []);
   useEffect(() => { window.localStorage.setItem("nk-theme", theme); }, [theme]);
 
   const sections = [["#about", "About"], ["#experience", "Experience"], ["#projects", "Projects"], ["#skills", "Skills"], ["#contact", "Contact"]];
 
+  useEffect(() => {
+    const ids = sections.map(([href]) => href.slice(1));
+    const els = ids.map((id) => document.getElementById(id)).filter(Boolean);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) setActiveSection(visible[0].target.id);
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  const yearsExp = getYearsOfExperience();
+  const heroStats = getHeroStats(yearsExp);
+
   return (
     <div className="nk-root nk-sans" style={{ minHeight: "100vh", ...themes[theme] }}>
       <style>{styles}</style>
+
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only"
+        style={{ position: "fixed", top: "8px", left: "8px", zIndex: 100, background: "var(--accent)", color: "#0A0E17", padding: "10px 16px", borderRadius: "6px", fontWeight: 600, fontSize: "0.85rem" }}
+      >
+        Skip to content
+      </a>
 
       <header className="nk-nav" style={{ position: "sticky", top: 0, zIndex: 40 }}>
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
           <span className="nk-mono text-sm" style={{ color: "var(--text)" }}>neha<span style={{ color: "var(--accent)" }}>.</span>khan</span>
           <nav className="hidden md:flex items-center gap-6">
-            {sections.map(([href, label]) => <NavLink key={href} href={href}>{label}</NavLink>)}
+            {sections.map(([href, label]) => (
+              <NavLink key={href} href={href} active={activeSection === href.slice(1)}>{label}</NavLink>
+            ))}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
@@ -242,7 +278,7 @@ export default function Portfolio() {
         {menuOpen && (
           <div className="md:hidden flex flex-col gap-1 px-6 pb-5">
             {sections.map(([href, label]) => (
-              <NavLink key={href} href={href} onClick={() => setMenuOpen(false)} className="block py-2.5">{label}</NavLink>
+              <NavLink key={href} href={href} onClick={() => setMenuOpen(false)} className="block py-2.5" active={activeSection === href.slice(1)}>{label}</NavLink>
             ))}
             <a
               href={`mailto:${profile.email}`}
@@ -256,7 +292,7 @@ export default function Portfolio() {
         )}
       </header>
 
-      <main>
+      <main id="main-content">
       {/* HERO */}
       <section className="nk-glow-violet" style={{ position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "-8%", right: "-6%", width: "56%", height: "120%", opacity: 0.9, pointerEvents: "none" }} className="hidden md:block">
@@ -270,7 +306,7 @@ export default function Portfolio() {
             Engineering systems.<br />Now teaching them to think.
           </h1>
           <p className="mt-7 max-w-lg" style={{ color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
-            4+ years building production backend systems — now going deep on LLM fine-tuning,
+            {yearsExp}+ years building production backend systems — now going deep on LLM fine-tuning,
             RAG, and AI security to bring both worlds into one practice.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-5">
@@ -301,11 +337,11 @@ export default function Portfolio() {
                 Built enterprise systems. Now building the AI layer on top of them.
               </h2>
               <p className="mt-5" style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
-                I've spent 4+ years in banking and product engineering — Core Java, Spring Boot, MERN.
+                I've spent {yearsExp}+ years in banking and product engineering — Core Java, Spring Boot, MERN.
                 Over the past year I've gone deliberately deep into AI engineering: LLM fundamentals,
                 fine-tuning with LoRA/QLoRA, retrieval-augmented generation, and AI security testing —
                 documenting the process publicly and shipping real, deployed projects rather than
-                stopping at tutorials.
+                stopping at tutorials. Based in Karachi, open to relocating for {profile.relocation}.
               </p>
             </div>
             <div className="nk-glass nk-card" style={{ borderRadius: "12px", padding: "1.5rem", overflow: "hidden" }}>
@@ -317,7 +353,7 @@ export default function Portfolio() {
               <pre className="nk-mono" style={{ fontSize: "0.82rem", lineHeight: 1.8, color: "var(--text-dim)", margin: 0, whiteSpace: "pre-wrap" }}>
 {`const engineer = {
   name: "Neha Khan",
-  experience: "4+ years",
+  experience: "${yearsExp}+ years",
   core: ["Java", "Spring Boot", "MERN"],
   learning: [`}<span style={{ color: "var(--teal)" }}>"LLM fine-tuning"</span>{`,
              `}<span style={{ color: "var(--teal)" }}>"RAG"</span>{`,
@@ -349,11 +385,14 @@ export default function Portfolio() {
                     <span className="nk-mono text-xs" style={{ color: "var(--teal)" }}>{job.role}</span>
                     <span className="nk-mono text-xs ml-auto" style={{ color: "var(--text-faint)" }}>{job.period}</span>
                   </div>
-                  <ul className="space-y-1.5">
+                  <ul className="space-y-1.5 mb-4">
                     {job.bullets.map((b, j) => (
                       <li key={j} className="text-sm" style={{ color: "var(--text-dim)", lineHeight: 1.65, maxWidth: "70ch" }}>{b}</li>
                     ))}
                   </ul>
+                  <div className="flex flex-wrap gap-2">
+                    {job.tags.map((t) => <span key={t} className="nk-tag">{t}</span>)}
+                  </div>
                 </div>
               </Reveal>
             ))}
