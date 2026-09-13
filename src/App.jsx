@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon, Network, ShieldCheck, GraduationCap } from "lucide-react";
 import { profile, getYearsOfExperience, getHeroStats, experience, projects, certifications, education, articles, skillGroups } from "./data.js";
-import { TechTag } from "./techIcons.jsx";
+import { TechTag, categoryMeta } from "./techIcons.jsx";
 import { SiMedium } from "react-icons/si";
 
 const projectIcons = {
@@ -80,6 +80,33 @@ const styles = `
     border-color: rgba(52,214,196,0.35);
     color: var(--teal);
     background: var(--teal-soft);
+  }
+  .nk-tag {
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  }
+  .nk-tag:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--text);
+    transform: translateY(-1px);
+  }
+  .nk-tag-ai:hover {
+    border-color: var(--teal);
+    background: var(--teal-soft);
+    color: var(--teal);
+  }
+  .nk-skill-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+  .nk-card:hover .nk-skill-icon {
+    transform: scale(1.08);
   }
   .nk-btn-primary {
     background: var(--accent);
@@ -621,17 +648,39 @@ export default function Portfolio() {
               What I work with
             </h2>
           </Reveal>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
-            {skillGroups.map((g, i) => (
-              <Reveal key={g.label} delay={i * 60}>
-                <div className="nk-glass nk-card" style={{ borderRadius: "12px", padding: "1.5rem", height: "100%" }}>
-                  <h3 className="text-sm font-semibold mb-3" style={{ color: g.ai ? "var(--teal)" : "var(--text)" }}>{g.label}</h3>
-                  <div className="flex flex-wrap gap-1.5">
-                    {g.items.map((item) => <TechTag key={item} label={item} />)}
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {skillGroups.map((g, i) => {
+              const meta = categoryMeta[g.label] || {};
+              const Icon = meta.icon;
+              const accent = g.ai ? "var(--teal)" : "var(--accent)";
+              const accentSoft = g.ai ? "var(--teal-soft)" : "var(--accent-soft)";
+              return (
+                <Reveal key={g.label} delay={i * 60}>
+                  <div
+                    className="nk-glass nk-card"
+                    style={{ borderRadius: "14px", padding: "1.75rem", height: "100%", display: "flex", flexDirection: "column" }}
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      {Icon && (
+                        <div
+                          className="nk-skill-icon"
+                          style={{ background: accentSoft, color: accent }}
+                        >
+                          <Icon size={16} aria-hidden="true" />
+                        </div>
+                      )}
+                      <h3 className="text-sm font-semibold" style={{ color: g.ai ? "var(--teal)" : "var(--text)" }}>{g.label}</h3>
+                    </div>
+                    {meta.caption && (
+                      <p className="text-xs mb-4" style={{ color: "var(--text-faint)" }}>{meta.caption}</p>
+                    )}
+                    <div className="flex flex-wrap gap-2 mt-auto">
+                      {g.items.map((item) => <TechTag key={item} label={item} />)}
+                    </div>
                   </div>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>

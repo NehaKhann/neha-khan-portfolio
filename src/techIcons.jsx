@@ -6,7 +6,7 @@ import {
   SiGit, SiDocker, SiGrafana, SiKeycloak,
   SiFastapi, SiPostgresql, SiPython, SiRabbitmq, SiVuedotjs,
 } from "react-icons/si";
-import { Database, Cpu, Code2 } from "lucide-react";
+import { Database, Cpu, Code2, Server, BrainCircuit, Layout, Coffee, Wrench } from "lucide-react";
 
 // Maps a skill/tag label to a brand icon. Labels without a matching
 // brand mark (JSP, Struts, conceptual items like "RAG") fall back to
@@ -55,6 +55,18 @@ const aiLabels = new Set([
   "LLM Fundamentals", "LoRA / QLoRA", "Hugging Face", "PyTorch", "LangChain",
   "RAG", "Vector DBs (FAISS/Chroma)", "AI Security", "AI/ML", "LLMs",
 ]);
+
+// Per-category presentation for the Skills section — an icon + one-line
+// caption so every card carries comparable visual weight regardless of how
+// many tags it holds, plus a consistent purple(core)/teal(AI) icon chip.
+export const categoryMeta = {
+  "Modern Backend": { icon: Server, caption: "APIs, services & runtime" },
+  "AI / ML": { icon: BrainCircuit, caption: "Fine-tuning, RAG & LLM tooling" },
+  "Frontend": { icon: Layout, caption: "Client-side interfaces" },
+  "Enterprise Java": { icon: Coffee, caption: "Legacy enterprise stack" },
+  "Databases": { icon: Database, caption: "Storage & persistence" },
+  "Tools": { icon: Wrench, caption: "Infra, auth & observability" },
+};
 
 export function TechTag({ label, className = "" }) {
   const Icon = iconMap[label];
