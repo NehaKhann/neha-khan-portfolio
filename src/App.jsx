@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon, Network, ShieldCheck, GraduationCap, Calendar, Download } from "lucide-react";
+import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon, Network, ShieldCheck, GraduationCap, Calendar, Download, Bug, Wand2 } from "lucide-react";
 import { profile, getYearsOfExperience, getHeroStats, experience, projects, certifications, education, articles, skillGroups } from "./data.js";
 import { TechTag, categoryMeta } from "./techIcons.jsx";
 import { SiMedium } from "react-icons/si";
@@ -8,6 +8,8 @@ const projectIcons = {
   "MCP Trust Registry": Network,
   "SpringGuard": ShieldCheck,
   "AI Engineering Journey": GraduationCap,
+  "AI Security — Garak": Bug,
+  "AI Security — Gandalf": Wand2,
 };
 
 const themes = {
@@ -94,6 +96,14 @@ const styles = `
     border-color: var(--teal);
     background: var(--teal-soft);
     color: var(--teal);
+  }
+  .nk-tab {
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .nk-tab:hover {
+    border-color: var(--accent);
+    color: var(--text);
   }
   .nk-skill-icon {
     width: 32px;
@@ -342,6 +352,7 @@ export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
   const [activeSection, setActiveSection] = useState("about");
+  const [activeCategory, setActiveCategory] = useState("All");
   useEffect(() => { document.body.style.margin = "0"; }, []);
   useEffect(() => { window.localStorage.setItem("nk-theme", theme); }, [theme]);
 
@@ -364,6 +375,8 @@ export default function Portfolio() {
   const yearsExp = getYearsOfExperience();
   const heroStats = getHeroStats(yearsExp);
   const resumeUrl = "/neha-khan-resume.pdf";
+  const projectCategories = ["All", ...new Set(projects.map((p) => p.category))];
+  const filteredProjects = activeCategory === "All" ? projects : projects.filter((p) => p.category === activeCategory);
 
   return (
     <div className="nk-root nk-sans" style={{ minHeight: "100vh", ...themes[theme] }}>
@@ -558,13 +571,37 @@ export default function Portfolio() {
             <h2 style={{ fontSize: "2.1rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", marginBottom: "0.5rem" }}>
               Real, deployed work
             </h2>
-            <p className="mb-10 text-sm" style={{ color: "var(--text-faint)" }}>Not tutorial clones — things that run, in production, right now.</p>
+            <p className="mb-8 text-sm" style={{ color: "var(--text-faint)" }}>Not tutorial clones — things that run, in production, right now.</p>
+          </Reveal>
+          <Reveal>
+            <div className="flex flex-wrap gap-2 mb-10">
+              {projectCategories.map((cat) => {
+                const count = cat === "All" ? projects.length : projects.filter((p) => p.category === cat).length;
+                const active = activeCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    aria-pressed={active}
+                    className="nk-mono nk-tab text-xs"
+                    style={{
+                      padding: "8px 16px", borderRadius: "20px",
+                      border: `1px solid ${active ? "var(--accent)" : "var(--border)"}`,
+                      background: active ? "var(--accent-soft)" : "var(--bg-elev)",
+                      color: active ? "var(--accent)" : "var(--text-dim)",
+                    }}
+                  >
+                    {cat} <span style={{ opacity: 0.7 }}>({count})</span>
+                  </button>
+                );
+              })}
+            </div>
           </Reveal>
           <div className="grid md:grid-cols-2 gap-6">
-            {projects.map((p, i) => {
+            {filteredProjects.map((p, i) => {
               const Icon = projectIcons[p.name] || Sparkles;
-              const nonFeaturedCount = projects.filter((x) => x.size !== "lg").length;
-              const isTrailingOdd = i === projects.length - 1 && nonFeaturedCount % 2 === 1;
+              const nonFeaturedCount = filteredProjects.filter((x) => x.size !== "lg").length;
+              const isTrailingOdd = i === filteredProjects.length - 1 && nonFeaturedCount % 2 === 1;
               const spanFull = p.size === "lg" || isTrailingOdd;
               return (
                 <Reveal key={p.name} delay={i * 90} className={spanFull ? "md:col-span-2" : ""}>
@@ -588,7 +625,7 @@ export default function Portfolio() {
                           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
                         />
                       )}
-                      {i === 0 && (
+                      {p.featured && (
                         <span className="nk-mono" style={{ position: "absolute", top: "14px", left: "16px", fontSize: "0.68rem", color: "var(--accent)", background: "var(--bg-elev)", border: "1px solid var(--border-hover)", padding: "3px 10px", borderRadius: "20px", zIndex: 1 }}>
                           ★ Featured
                         </span>
