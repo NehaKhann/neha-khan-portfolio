@@ -91,6 +91,33 @@ const styles = `
     transform: translateY(-1px);
     box-shadow: 0 8px 24px rgba(139,111,255,0.35);
   }
+  .nk-btn-secondary {
+    background: transparent;
+    color: var(--text);
+    font-weight: 600;
+    border: 1px solid var(--border-hover);
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .nk-btn-secondary:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .nk-navlink {
+    position: relative;
+    padding-bottom: 3px;
+  }
+  .nk-navlink::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 100%; bottom: 0;
+    height: 1.5px;
+    background: var(--accent);
+    transition: right 0.2s ease;
+  }
+  .nk-navlink:hover::after, .nk-navlink[aria-current="true"]::after {
+    right: 0;
+  }
   .nk-card {
     transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   }
@@ -157,7 +184,7 @@ function NavLink({ href, children, onClick, className = "", active = false }) {
     <a
       href={href}
       onClick={onClick}
-      className={`nk-sans nk-link text-sm ${className}`}
+      className={`nk-sans nk-link nk-navlink text-sm ${className}`}
       style={active ? { color: "var(--text)" } : undefined}
       aria-current={active ? "true" : undefined}
     >
@@ -203,17 +230,22 @@ function SocialIconLink({ href, label, children }) {
 }
 
 function NetworkGraphic({ className = "" }) {
-  const layer1 = [80, 180, 280, 380];
-  const layer2 = [50, 150, 250, 350, 440];
-  const layer3 = [140, 300];
-  const x1 = 40, x2 = 210, x3 = 380;
-  const lines = [];
-  layer1.forEach((y1, i) => layer2.forEach((y2, j) => lines.push(
-    <line key={`l1-${i}-${j}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--border-hover)" strokeWidth="1" opacity="0.5" />
-  )));
-  layer2.forEach((y2, i) => layer3.forEach((y3, j) => lines.push(
-    <line key={`l2-${i}-${j}`} x1={x2} y1={y2} x2={x3} y2={y3} stroke="var(--border-hover)" strokeWidth="1" opacity="0.5" />
-  )));
+  // A small, deliberately sparse node graph — a few labeled connections
+  // rather than a dense mesh, so it reads as a diagram, not noise.
+  const x1 = 60, x2 = 230, x3 = 400;
+  const layer1 = [140, 320];
+  const layer2 = [90, 230, 370];
+  const layer3 = [160, 320];
+  const links = [
+    [x1, layer1[0], x2, layer2[0]],
+    [x1, layer1[0], x2, layer2[1]],
+    [x1, layer1[1], x2, layer2[1]],
+    [x1, layer1[1], x2, layer2[2]],
+    [x2, layer2[0], x3, layer3[0]],
+    [x2, layer2[1], x3, layer3[0]],
+    [x2, layer2[1], x3, layer3[1]],
+    [x2, layer2[2], x3, layer3[1]],
+  ];
 
   return (
     <svg viewBox="0 0 460 460" className={className} style={{ width: "100%", height: "100%" }} aria-hidden="true">
@@ -226,23 +258,25 @@ function NetworkGraphic({ className = "" }) {
           </feMerge>
         </filter>
       </defs>
-      {lines}
+      {links.map(([lx1, ly1, lx2, ly2], i) => (
+        <line key={i} x1={lx1} y1={ly1} x2={lx2} y2={ly2} stroke="var(--border-hover)" strokeWidth="1" opacity="0.5" />
+      ))}
       {/* signal-flow accent lines */}
-      <line x1={x1} y1={layer1[1]} x2={x2} y2={layer2[2]} stroke="var(--teal)" strokeWidth="1.5" strokeDasharray="6 10" opacity="0.7">
+      <line x1={x1} y1={layer1[0]} x2={x2} y2={layer2[1]} stroke="var(--teal)" strokeWidth="1.5" strokeDasharray="6 10" opacity="0.8">
         <animate attributeName="stroke-dashoffset" from="0" to="-32" dur="1.6s" repeatCount="indefinite" />
       </line>
-      <line x1={x2} y1={layer2[3]} x2={x3} y2={layer3[1]} stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="6 10" opacity="0.7">
+      <line x1={x2} y1={layer2[1]} x2={x3} y2={layer3[1]} stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="6 10" opacity="0.8">
         <animate attributeName="stroke-dashoffset" from="0" to="-32" dur="2s" repeatCount="indefinite" />
       </line>
 
-      {layer1.map((y, i) => <circle key={`n1-${i}`} cx={x1} cy={y} r="5" fill="var(--text-faint)" />)}
+      {layer1.map((y, i) => <circle key={`n1-${i}`} cx={x1} cy={y} r="6" fill="var(--text-faint)" />)}
       {layer2.map((y, i) => (
-        <circle key={`n2-${i}`} cx={x2} cy={y} r={i === 2 ? 7 : 5}
-          fill={i === 2 ? "var(--teal)" : "var(--text-faint)"}
-          filter={i === 2 ? "url(#nkGlow)" : undefined} />
+        <circle key={`n2-${i}`} cx={x2} cy={y} r={i === 1 ? 8 : 6}
+          fill={i === 1 ? "var(--teal)" : "var(--text-faint)"}
+          filter={i === 1 ? "url(#nkGlow)" : undefined} />
       ))}
       {layer3.map((y, i) => (
-        <circle key={`n3-${i}`} cx={x3} cy={y} r="7" fill="var(--accent)" filter="url(#nkGlow)" />
+        <circle key={`n3-${i}`} cx={x3} cy={y} r="8" fill="var(--accent)" filter="url(#nkGlow)" />
       ))}
     </svg>
   );
@@ -262,7 +296,7 @@ export default function Portfolio() {
   useEffect(() => { document.body.style.margin = "0"; }, []);
   useEffect(() => { window.localStorage.setItem("nk-theme", theme); }, [theme]);
 
-  const sections = [["#about", "About"], ["#experience", "Experience"], ["#projects", "Projects"], ["#skills", "Skills"], ["#contact", "Contact"]];
+  const sections = [["#about", "About"], ["#projects", "Projects"], ["#experience", "Experience"], ["#skills", "Skills"], ["#contact", "Contact"]];
 
   useEffect(() => {
     const ids = sections.map(([href]) => href.slice(1));
@@ -373,12 +407,13 @@ export default function Portfolio() {
             {yearsExp}+ years building production backend systems — now going deep on LLM fine-tuning,
             RAG, and AI security to bring both worlds into one practice.
           </p>
-          <div className="mt-9 flex flex-wrap items-center gap-5">
-            <a href="#projects" className="nk-btn-primary" style={{ padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem" }}>See the work</a>
-            <span className="flex items-center gap-1.5 text-sm" style={{ color: "var(--text-faint)" }}>
-              <MapPin size={14} /> {profile.location}
-            </span>
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <a href={`mailto:${profile.email}`} className="nk-btn-primary" style={{ padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem" }}>Get in touch</a>
+            <a href="#projects" className="nk-btn-secondary" style={{ padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem", textDecoration: "none" }}>See the work</a>
           </div>
+          <span className="mt-6 flex items-center gap-1.5 text-sm" style={{ color: "var(--text-faint)" }}>
+            <MapPin size={14} /> Karachi, Pakistan
+          </span>
 
           <div className="mt-16 grid grid-cols-3 max-w-md gap-4 sm:gap-8">
             {heroStats.map(([num, label]) => (
@@ -397,45 +432,125 @@ export default function Portfolio() {
           <div className="grid md:grid-cols-2 gap-14 items-start">
             <div>
               <p className="nk-mono text-xs mb-3" style={{ color: "var(--accent)" }}>01 — About</p>
-              <h2 style={{ fontSize: "1.9rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)" }}>
+              <h2 style={{ fontSize: "1.9rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", marginBottom: "2rem" }}>
                 Built enterprise systems. Now building the AI layer on top of them.
               </h2>
-              <p className="mt-5" style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
-                I've spent {yearsExp}+ years in banking and product engineering — Core Java, Spring Boot, MERN.
-                Over the past year I've gone deliberately deep into AI engineering: LLM fundamentals,
-                fine-tuning with LoRA/QLoRA, retrieval-augmented generation, and AI security testing —
-                documenting the process publicly and shipping real, deployed projects rather than
-                stopping at tutorials. Based in Karachi, open to relocating for {profile.relocation}.
-              </p>
-            </div>
-            <div className="nk-glass nk-card" style={{ borderRadius: "12px", padding: "1.5rem", overflow: "hidden" }}>
-              <div className="flex gap-1.5 mb-4">
-                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#FF5F57" }} />
-                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#FEBC2E" }} />
-                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#28C840" }} />
+
+              <div className="mb-6">
+                <p className="nk-mono text-xs mb-2" style={{ color: "var(--text-faint)" }}>Background</p>
+                <p style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
+                  {yearsExp}+ years building enterprise systems in banking and product engineering — Core Java, Spring Boot, Quarkus, and the MERN stack.
+                </p>
               </div>
-              <pre className="nk-mono" style={{ fontSize: "0.82rem", lineHeight: 1.8, color: "var(--text-dim)", margin: 0, whiteSpace: "pre-wrap" }}>
-{`const engineer = {
-  name: "Neha Khan",
-  experience: "${yearsExp}+ years",
-  core: ["Java", "Spring Boot", "MERN"],
-  learning: [`}<span style={{ color: "var(--teal)" }}>"LLM fine-tuning"</span>{`,
-             `}<span style={{ color: "var(--teal)" }}>"RAG"</span>{`,
-             `}<span style={{ color: "var(--teal)" }}>"AI security"</span>{`],
-  based_in: "Karachi, PK",
-  open_to: ["remote", "Gulf", "Malaysia", "Germany"],
-};`}
-              </pre>
+              <div className="mb-6">
+                <p className="nk-mono text-xs mb-2" style={{ color: "var(--teal)" }}>Now</p>
+                <p style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
+                  Going deep on AI engineering: LLM fundamentals, fine-tuning with LoRA/QLoRA, retrieval-augmented generation, and AI security testing.
+                </p>
+              </div>
+              <div className="mb-6">
+                <p className="nk-mono text-xs mb-2" style={{ color: "var(--text-faint)" }}>Approach</p>
+                <p style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
+                  Documenting the process publicly and shipping real, deployed projects — not stopping at tutorials.
+                </p>
+              </div>
+              <div>
+                <p className="nk-mono text-xs mb-2" style={{ color: "var(--text-faint)" }}>Based in</p>
+                <p style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
+                  Karachi, Pakistan — open to relocating for {profile.relocation}.
+                </p>
+              </div>
+            </div>
+
+            <div className="nk-glass nk-card" style={{ borderRadius: "16px", padding: "2rem" }}>
+              <p className="nk-mono text-xs mb-7" style={{ color: "var(--text-faint)" }}>Career trajectory</p>
+              <div style={{ position: "relative", paddingLeft: "30px" }}>
+                <div style={{ position: "absolute", left: "5px", top: "8px", bottom: "8px", width: "2px", background: "linear-gradient(var(--accent), var(--teal))" }} />
+                <div style={{ position: "relative", marginBottom: "2.25rem" }}>
+                  <div style={{ position: "absolute", left: "-30px", top: "5px", width: "12px", height: "12px", borderRadius: "50%", background: "var(--accent)", boxShadow: "0 0 0 4px var(--accent-soft)" }} />
+                  <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)" }}>Full-Stack / Backend Engineer</h3>
+                  <p className="nk-mono text-xs mt-0.5 mb-2" style={{ color: "var(--text-faint)" }}>2022 — 2025</p>
+                  <p className="text-sm" style={{ color: "var(--text-dim)", lineHeight: 1.6 }}>
+                    Java, Spring Boot, Quarkus, Vue.js &amp; React — banking and enterprise systems.
+                  </p>
+                </div>
+                <div style={{ position: "relative" }}>
+                  <div style={{ position: "absolute", left: "-30px", top: "5px", width: "12px", height: "12px", borderRadius: "50%", background: "var(--teal)", boxShadow: "0 0 0 4px var(--teal-soft)" }} />
+                  <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)" }}>AI Engineer <span className="nk-mono" style={{ fontSize: "0.7rem", fontWeight: 500, color: "var(--teal)" }}>(self-directed)</span></h3>
+                  <p className="nk-mono text-xs mt-0.5 mb-2" style={{ color: "var(--text-faint)" }}>2025 — Present</p>
+                  <p className="text-sm" style={{ color: "var(--text-dim)", lineHeight: 1.6 }}>
+                    LLM fine-tuning, RAG, AI security — published in {articles.length}+ articles and {projects.length} deployed projects.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </Reveal>
       </section>
 
-      {/* EXPERIENCE */}
-      <section id="experience" style={{ borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+      {/* PROJECTS — the centerpiece */}
+      <section id="projects" style={{ borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", background: "var(--bg-elev)" }}>
         <div className="max-w-6xl mx-auto px-6 py-24">
           <Reveal>
-            <p className="nk-mono text-xs mb-3" style={{ color: "var(--accent)" }}>02 — Experience</p>
+            <p className="nk-mono text-xs mb-3" style={{ color: "var(--accent)" }}>02 — Projects</p>
+            <h2 style={{ fontSize: "2.1rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", marginBottom: "0.5rem" }}>
+              Real, deployed work
+            </h2>
+            <p className="mb-10 text-sm" style={{ color: "var(--text-faint)" }}>Not tutorial clones — things that run, in production, right now.</p>
+          </Reveal>
+          <div className="grid md:grid-cols-2 gap-6">
+            {projects.map((p, i) => {
+              const Icon = projectIcons[p.name] || Sparkles;
+              return (
+                <Reveal key={p.name} delay={i * 90} className={p.size === "lg" ? "md:col-span-2" : ""}>
+                  <div className="nk-glass nk-card" style={{ borderRadius: "16px", overflow: "hidden", height: "100%", position: "relative" }}>
+                    <div
+                      className="flex items-center justify-center"
+                      style={{
+                        height: p.size === "lg" ? "150px" : "110px", position: "relative",
+                        background: "linear-gradient(135deg, var(--accent-soft), var(--teal-soft))",
+                        backgroundImage: "linear-gradient(135deg, var(--accent-soft), var(--teal-soft)), radial-gradient(var(--border-hover) 1px, transparent 1px)",
+                        backgroundSize: "100% 100%, 16px 16px",
+                        borderBottom: "1px solid var(--border)",
+                      }}
+                    >
+                      {i === 0 && (
+                        <span className="nk-mono" style={{ position: "absolute", top: "14px", left: "16px", fontSize: "0.68rem", color: "var(--accent)", background: "var(--bg-elev)", border: "1px solid var(--border-hover)", padding: "3px 10px", borderRadius: "20px" }}>
+                          ★ Featured
+                        </span>
+                      )}
+                      <Icon size={p.size === "lg" ? 40 : 30} style={{ color: "var(--accent)" }} aria-hidden="true" />
+                    </div>
+                    <div style={{ padding: p.size === "lg" ? "2rem" : "1.75rem" }}>
+                      <h3 style={{ fontSize: p.size === "lg" ? "1.5rem" : "1.15rem", fontWeight: 700, color: "var(--text)", marginBottom: "0.65rem" }}>{p.name}</h3>
+                      <p className="text-sm mb-5" style={{ color: "var(--text-dim)", lineHeight: 1.65, maxWidth: p.size === "lg" ? "60ch" : "none" }}>{p.tagline}</p>
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {p.tags.map((t) => <TechTag key={t} label={t} className={t.includes("AI") ? "nk-tag-ai" : ""} />)}
+                      </div>
+                      <div className="flex gap-5 text-sm">
+                        <a href={p.github} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-1.5 font-medium" style={{ color: "var(--text)" }}>
+                          <Github size={15} /> Code
+                        </a>
+                        {p.live && (
+                          <a href={p.live} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-1.5 font-medium" style={{ color: "var(--accent)" }}>
+                            Live <ArrowUpRight size={14} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* EXPERIENCE */}
+      <section id="experience">
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <Reveal>
+            <p className="nk-mono text-xs mb-3" style={{ color: "var(--accent)" }}>03 — Experience</p>
             <h2 style={{ fontSize: "1.9rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", marginBottom: "3rem" }}>
               Where I've built things
             </h2>
@@ -461,51 +576,6 @@ export default function Portfolio() {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* PROJECTS — bento grid */}
-      <section id="projects" className="max-w-6xl mx-auto px-6 py-24">
-        <Reveal>
-          <p className="nk-mono text-xs mb-3" style={{ color: "var(--accent)" }}>03 — Projects</p>
-          <h2 style={{ fontSize: "1.9rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", marginBottom: "0.5rem" }}>
-            Real, deployed work
-          </h2>
-          <p className="mb-10 text-sm" style={{ color: "var(--text-faint)" }}>Not tutorial clones — things that run.</p>
-        </Reveal>
-        <div className="grid md:grid-cols-2 gap-5">
-          {projects.map((p, i) => {
-            const Icon = projectIcons[p.name] || Sparkles;
-            return (
-              <Reveal key={p.name} delay={i * 90} className={p.size === "lg" ? "md:col-span-2" : ""}>
-                <div className="nk-glass nk-card" style={{ borderRadius: "14px", overflow: "hidden", height: "100%" }}>
-                  <div
-                    className="flex items-center justify-center"
-                    style={{ height: "84px", background: "linear-gradient(135deg, var(--accent-soft), var(--teal-soft))", borderBottom: "1px solid var(--border)" }}
-                  >
-                    <Icon size={28} style={{ color: "var(--accent)" }} aria-hidden="true" />
-                  </div>
-                  <div style={{ padding: "1.75rem" }}>
-                    <h3 style={{ fontSize: p.size === "lg" ? "1.4rem" : "1.15rem", fontWeight: 700, color: "var(--text)", marginBottom: "0.65rem" }}>{p.name}</h3>
-                    <p className="text-sm mb-5" style={{ color: "var(--text-dim)", lineHeight: 1.65, maxWidth: p.size === "lg" ? "60ch" : "none" }}>{p.tagline}</p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {p.tags.map((t) => <TechTag key={t} label={t} className={t.includes("AI") ? "nk-tag-ai" : ""} />)}
-                    </div>
-                    <div className="flex gap-5 text-sm">
-                      <a href={p.github} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-1.5 font-medium" style={{ color: "var(--text)" }}>
-                        <Github size={15} /> Code
-                      </a>
-                      {p.live && (
-                        <a href={p.live} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-1.5 font-medium" style={{ color: "var(--accent)" }}>
-                          Live <ArrowUpRight size={14} />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            );
-          })}
         </div>
       </section>
 

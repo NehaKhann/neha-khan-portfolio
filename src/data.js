@@ -31,8 +31,8 @@ export function getYearsOfExperience(from = careerStart, to = new Date()) {
 export function getHeroStats(years) {
   return [
     [`${years}+`, "years exp"],
-    ["50%", "faster deploys shipped"],
-    ["4", "AI/full-stack projects"],
+    [`${projects.length}`, "featured projects"],
+    [`${articles.length}+`, "articles published"],
   ];
 }
 
