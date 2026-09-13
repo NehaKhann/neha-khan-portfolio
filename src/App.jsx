@@ -1,7 +1,14 @@
 import { useState, useEffect, useRef } from "react";
-import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon } from "lucide-react";
+import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon, Network, ShieldCheck, GraduationCap } from "lucide-react";
 import { profile, getYearsOfExperience, getHeroStats, experience, projects, certifications, education, articles, skillGroups } from "./data.js";
 import { TechTag } from "./techIcons.jsx";
+import { SiMedium } from "react-icons/si";
+
+const projectIcons = {
+  "MCP Trust Registry": Network,
+  "SpringGuard": ShieldCheck,
+  "AI Engineering Journey": GraduationCap,
+};
 
 const themes = {
   dark: {
@@ -159,6 +166,42 @@ function NavLink({ href, children, onClick, className = "", active = false }) {
   );
 }
 
+function Avatar({ size = 56 }) {
+  return (
+    <div
+      className="nk-mono"
+      aria-hidden="true"
+      style={{
+        width: size, height: size, borderRadius: "50%", flexShrink: 0,
+        background: "linear-gradient(135deg, var(--accent), var(--teal))",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: size * 0.34, fontWeight: 700, color: "#0A0E17",
+      }}
+    >
+      NK
+    </div>
+  );
+}
+
+function SocialIconLink({ href, label, children }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={label}
+      className="nk-link"
+      style={{
+        width: "34px", height: "34px", borderRadius: "50%",
+        border: "1px solid var(--border)", background: "var(--bg-elev)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}
+    >
+      {children}
+    </a>
+  );
+}
+
 function NetworkGraphic({ className = "" }) {
   const layer1 = [80, 180, 280, 380];
   const layer2 = [50, 150, 250, 350, 440];
@@ -303,6 +346,23 @@ export default function Portfolio() {
           <NetworkGraphic />
         </div>
         <div className="max-w-6xl mx-auto px-6 pt-24 pb-28 md:pt-32 md:pb-36" style={{ position: "relative" }}>
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+            <div className="flex items-center gap-3">
+              <Avatar />
+              <span style={{ color: "var(--text-dim)", fontSize: "1.05rem" }}>Hi, I'm Neha 👋</span>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <SocialIconLink href={profile.linkedin} label="LinkedIn">
+                <Linkedin size={15} aria-hidden="true" />
+              </SocialIconLink>
+              <SocialIconLink href={profile.github} label="GitHub">
+                <Github size={15} aria-hidden="true" />
+              </SocialIconLink>
+              <SocialIconLink href={profile.medium} label="Medium">
+                <SiMedium size={13} aria-hidden="true" />
+              </SocialIconLink>
+            </div>
+          </div>
           <div className="inline-flex items-center gap-2 nk-mono text-xs mb-7" style={{ color: "var(--teal)", border: "1px solid rgba(52,214,196,0.3)", background: "var(--teal-soft)", padding: "6px 14px", borderRadius: "20px" }}>
             <span className="nk-dot" /> Open to full-stack &amp; AI engineering roles
           </div>
@@ -414,30 +474,38 @@ export default function Portfolio() {
           <p className="mb-10 text-sm" style={{ color: "var(--text-faint)" }}>Not tutorial clones — things that run.</p>
         </Reveal>
         <div className="grid md:grid-cols-2 gap-5">
-          {projects.map((p, i) => (
-            <Reveal key={p.name} delay={i * 90} className={p.size === "lg" ? "md:col-span-2" : ""}>
-              <div className="nk-glass nk-card" style={{ borderRadius: "14px", padding: "2rem", height: "100%" }}>
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <h3 style={{ fontSize: p.size === "lg" ? "1.4rem" : "1.15rem", fontWeight: 700, color: "var(--text)" }}>{p.name}</h3>
-                  <Sparkles size={16} style={{ color: "var(--accent)", flexShrink: 0, marginTop: 4 }} />
+          {projects.map((p, i) => {
+            const Icon = projectIcons[p.name] || Sparkles;
+            return (
+              <Reveal key={p.name} delay={i * 90} className={p.size === "lg" ? "md:col-span-2" : ""}>
+                <div className="nk-glass nk-card" style={{ borderRadius: "14px", overflow: "hidden", height: "100%" }}>
+                  <div
+                    className="flex items-center justify-center"
+                    style={{ height: "84px", background: "linear-gradient(135deg, var(--accent-soft), var(--teal-soft))", borderBottom: "1px solid var(--border)" }}
+                  >
+                    <Icon size={28} style={{ color: "var(--accent)" }} aria-hidden="true" />
+                  </div>
+                  <div style={{ padding: "1.75rem" }}>
+                    <h3 style={{ fontSize: p.size === "lg" ? "1.4rem" : "1.15rem", fontWeight: 700, color: "var(--text)", marginBottom: "0.65rem" }}>{p.name}</h3>
+                    <p className="text-sm mb-5" style={{ color: "var(--text-dim)", lineHeight: 1.65, maxWidth: p.size === "lg" ? "60ch" : "none" }}>{p.tagline}</p>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {p.tags.map((t) => <TechTag key={t} label={t} className={t.includes("AI") ? "nk-tag-ai" : ""} />)}
+                    </div>
+                    <div className="flex gap-5 text-sm">
+                      <a href={p.github} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-1.5 font-medium" style={{ color: "var(--text)" }}>
+                        <Github size={15} /> Code
+                      </a>
+                      {p.live && (
+                        <a href={p.live} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-1.5 font-medium" style={{ color: "var(--accent)" }}>
+                          Live <ArrowUpRight size={14} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <p className="text-sm mb-5" style={{ color: "var(--text-dim)", lineHeight: 1.65, maxWidth: p.size === "lg" ? "60ch" : "none" }}>{p.tagline}</p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {p.tags.map((t) => <TechTag key={t} label={t} className={t.includes("AI") ? "nk-tag-ai" : ""} />)}
-                </div>
-                <div className="flex gap-5 text-sm">
-                  <a href={p.github} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-1.5 font-medium" style={{ color: "var(--text)" }}>
-                    <Github size={15} /> Code
-                  </a>
-                  {p.live && (
-                    <a href={p.live} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-1.5 font-medium" style={{ color: "var(--accent)" }}>
-                      Live <ArrowUpRight size={14} />
-                    </a>
-                  )}
-                </div>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 
