@@ -6,7 +6,7 @@ import {
   SiGit, SiDocker, SiGrafana, SiKeycloak,
   SiFastapi, SiPostgresql, SiPython, SiRabbitmq, SiVuedotjs,
 } from "react-icons/si";
-import { Database, Cpu, Code2, Server, BrainCircuit, Layout, Coffee, Wrench, ShieldAlert } from "lucide-react";
+import { Database, Cpu, Code2, Server, BrainCircuit, Layout, Coffee, Wrench, ShieldAlert, Waypoints, TrendingUp } from "lucide-react";
 
 // Maps a skill/tag label to a brand icon. Labels without a matching
 // brand mark (JSP, Struts, conceptual items like "RAG") fall back to
@@ -49,6 +49,12 @@ const iconMap = {
   "AI Security": ShieldAlert,
   "LLM Security": ShieldAlert,
   "Prompt Injection": ShieldAlert,
+  "Tool Poisoning": ShieldAlert,
+  "Vulnerability Assessment": ShieldAlert,
+  "Red Teaming": ShieldAlert,
+  "Fine-tuning": Cpu,
+  "MCP": Waypoints,
+  "Risk Analysis": TrendingUp,
 };
 
 // Labels that belong to the AI/ML side of the purple(core)/teal(AI) system —
@@ -57,7 +63,8 @@ const iconMap = {
 const aiLabels = new Set([
   "LLM Fundamentals", "LoRA / QLoRA", "Hugging Face", "PyTorch", "LangChain",
   "RAG", "Vector DBs (FAISS/Chroma)", "AI Security", "AI/ML", "LLMs",
-  "LLM Security", "Prompt Injection",
+  "LLM Security", "Prompt Injection", "Tool Poisoning", "Vulnerability Assessment",
+  "Red Teaming", "Fine-tuning", "MCP",
 ]);
 
 // Per-category presentation for the Skills section — an icon + one-line
