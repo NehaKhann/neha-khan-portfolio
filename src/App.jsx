@@ -751,27 +751,39 @@ export default function Portfolio() {
 
       {/* CONTACT */}
       <footer id="contact" className="nk-glow-violet" style={{ borderTop: "1px solid var(--border)" }}>
-        <div className="max-w-6xl mx-auto px-6 py-28 text-center">
+        <div className="max-w-6xl mx-auto px-6 pt-28 pb-12 text-center">
           <Reveal>
             <p className="nk-mono text-xs mb-4" style={{ color: "var(--accent)" }}>07 — Contact</p>
             <h2 style={{ fontSize: "clamp(1.9rem, 4vw, 2.8rem)", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", marginBottom: "1.2rem" }}>
               Let's build something together.
             </h2>
-            <a href={`mailto:${profile.email}`} className="nk-link" style={{ fontSize: "1.2rem", color: "var(--text)", fontWeight: 600, wordBreak: "break-word" }}>
-              {profile.email}
-            </a>
-            <div className="flex flex-wrap justify-center gap-x-7 gap-y-4 mt-10">
-              <a href={profile.linkedin} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-2">
-                <Linkedin size={18} /> LinkedIn
-              </a>
-              <a href={profile.github} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-2">
-                <Github size={18} /> GitHub
-              </a>
-              <a href={`mailto:${profile.email}`} className="nk-link flex items-center gap-2">
-                <Mail size={18} /> Email
+            <p style={{ color: "var(--text-dim)", fontSize: "1.05rem", maxWidth: "480px", margin: "0 auto 2rem" }}>
+              Open to full-stack and AI engineering roles — happy to talk about a role, a project, or just trade notes on LLMs.
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-4">
+              <a href={`mailto:${profile.email}`} className="nk-btn-primary" style={{ padding: "12px 26px", borderRadius: "8px", fontSize: "0.95rem", display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                <Mail size={16} aria-hidden="true" /> {profile.email}
               </a>
             </div>
+            <div className="flex flex-wrap justify-center items-center gap-3 mt-8">
+              <SocialIconLink href={profile.linkedin} label="LinkedIn">
+                <Linkedin size={15} aria-hidden="true" />
+              </SocialIconLink>
+              <SocialIconLink href={profile.github} label="GitHub">
+                <Github size={15} aria-hidden="true" />
+              </SocialIconLink>
+              <SocialIconLink href={profile.medium} label="Medium">
+                <SiMedium size={13} aria-hidden="true" />
+              </SocialIconLink>
+            </div>
           </Reveal>
+        </div>
+        <div style={{ borderTop: "1px solid var(--border)" }}>
+          <div className="max-w-6xl mx-auto px-6 py-6 flex flex-wrap justify-center items-center gap-2 text-xs" style={{ color: "var(--text-faint)" }}>
+            <span>&copy; {new Date().getFullYear()} {profile.name}</span>
+            <span aria-hidden="true">&middot;</span>
+            <span>Karachi, Pakistan</span>
+          </div>
         </div>
       </footer>
     </div>
