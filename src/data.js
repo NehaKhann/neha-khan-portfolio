@@ -70,13 +70,15 @@ export const experience = [
 export const projects = [
   { name: "MCP Trust Registry", size: "lg",
     tagline: "A live registry that scans and scores MCP tools for trustworthiness. Built solo, deployed for $0/month — and it once caught a real incident.",
-    tags: ["Full-Stack", "AI Security"], github: "https://github.com/NehaKhann/mcp-trust-registry", live: "https://mcp-trust-registry.vercel.app" },
+    tags: ["Full-Stack", "AI Security"], github: "https://github.com/NehaKhann/mcp-trust-registry", live: "https://mcp-trust-registry.vercel.app",
+    screenshot: "/project-mcp-trust-registry.jpg" },
   { name: "SpringGuard", size: "sm",
     tagline: "Spring Boot code auditor — 21 security rules plus an AI review pass, grading Java code A–F with AI-proposed fixes.",
-    tags: ["Spring Boot", "AI/ML"], github: "https://github.com/NehaKhann/springguard-backend", live: "https://springguard-frontend.vercel.app" },
+    tags: ["Spring Boot", "AI/ML"], github: "https://github.com/NehaKhann/springguard-backend", live: "https://springguard-frontend.vercel.app",
+    screenshot: "/project-springguard.jpg" },
   { name: "AI Engineering Journey", size: "md",
     tagline: "A self-directed curriculum — LLM foundations, fine-tuning, LoRA/QLoRA, RAG — documented weekly with published write-ups.",
-    tags: ["LLMs", "RAG"], github: "https://github.com/NehaKhann/ai-engineering-journey", live: null },
+    tags: ["LLMs", "RAG"], github: "https://github.com/NehaKhann/ai-engineering-journey", live: null, screenshot: null },
 ];
 
 export const certifications = [

@@ -48,10 +48,19 @@ const iconMap = {
   "JSF": Code2,
 };
 
+// Labels that belong to the AI/ML side of the purple(core)/teal(AI) system —
+// styled consistently wherever a tag appears (skills, projects, experience),
+// rather than each caller deciding on its own.
+const aiLabels = new Set([
+  "LLM Fundamentals", "LoRA / QLoRA", "Hugging Face", "PyTorch", "LangChain",
+  "RAG", "Vector DBs (FAISS/Chroma)", "AI Security", "AI/ML", "LLMs",
+]);
+
 export function TechTag({ label, className = "" }) {
   const Icon = iconMap[label];
+  const isAi = aiLabels.has(label);
   return (
-    <span className={`nk-tag ${className}`}>
+    <span className={`nk-tag ${isAi ? "nk-tag-ai" : ""} ${className}`}>
       {Icon && <Icon size={12} style={{ flexShrink: 0 }} aria-hidden="true" />}
       {label}
     </span>

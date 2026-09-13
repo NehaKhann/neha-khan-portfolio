@@ -47,6 +47,7 @@ const styles = `
   }
   .nk-mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   .nk-sans { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-feature-settings: "cv11", "ss01"; }
+  h1, h2, h3 { text-wrap: balance; }
   .nk-root { background: var(--bg); color: var(--text); transition: background 0.3s ease, color 0.3s ease; }
   .nk-glass {
     background: var(--bg-elev);
@@ -123,7 +124,22 @@ const styles = `
   }
   .nk-card:hover {
     transform: translateY(-3px);
+    border-color: var(--accent);
     box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+  }
+  .nk-social-icon {
+    transition: transform 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .nk-social-icon:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .nk-live-link svg {
+    transition: transform 0.15s ease;
+  }
+  .nk-live-link:hover svg {
+    transform: translate(2px, -2px);
   }
   .nk-link {
     text-decoration: none;
@@ -137,6 +153,11 @@ const styles = `
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
   .nk-reveal.in { opacity: 1; transform: translateY(0); }
+  @keyframes nkFadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .nk-fade-in { animation: nkFadeUp 0.7s ease both; }
   .nk-dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: var(--teal);
@@ -146,6 +167,7 @@ const styles = `
   @media (prefers-reduced-motion: reduce) {
     .nk-reveal { opacity: 1; transform: none; transition: none; }
     .nk-card:hover, .nk-btn-primary:hover { transform: none; }
+    .nk-fade-in { animation: none; opacity: 1; }
   }
   a:focus-visible, button:focus-visible {
     outline: 2px solid var(--accent);
@@ -217,7 +239,7 @@ function SocialIconLink({ href, label, children }) {
       target="_blank"
       rel="noreferrer"
       aria-label={label}
-      className="nk-link"
+      className="nk-link nk-social-icon"
       style={{
         width: "34px", height: "34px", borderRadius: "50%",
         border: "1px solid var(--border)", background: "var(--bg-elev)",
@@ -380,7 +402,7 @@ export default function Portfolio() {
           <NetworkGraphic />
         </div>
         <div className="max-w-6xl mx-auto px-6 pt-24 pb-28 md:pt-32 md:pb-36" style={{ position: "relative" }}>
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="nk-fade-in flex flex-wrap items-center justify-between gap-4 mb-8">
             <div className="flex items-center gap-3">
               <Avatar />
               <span style={{ color: "var(--text-dim)", fontSize: "1.05rem" }}>Hi, I'm Neha 👋</span>
@@ -397,25 +419,25 @@ export default function Portfolio() {
               </SocialIconLink>
             </div>
           </div>
-          <div className="inline-flex items-center gap-2 nk-mono text-xs mb-7" style={{ color: "var(--teal)", border: "1px solid rgba(52,214,196,0.3)", background: "var(--teal-soft)", padding: "6px 14px", borderRadius: "20px" }}>
+          <div className="nk-fade-in inline-flex items-center gap-2 nk-mono text-xs mb-7" style={{ animationDelay: "80ms", color: "var(--teal)", border: "1px solid rgba(52,214,196,0.3)", background: "var(--teal-soft)", padding: "6px 14px", borderRadius: "20px" }}>
             <span className="nk-dot" /> Open to full-stack &amp; AI engineering roles
           </div>
-          <h1 className="nk-sans" style={{ fontSize: "clamp(2.4rem, 5.2vw, 4.1rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: "min(18ch, 640px)", color: "var(--text)" }}>
+          <h1 className="nk-fade-in nk-sans" style={{ animationDelay: "150ms", fontSize: "clamp(2.4rem, 5.2vw, 4.1rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: "min(18ch, 640px)", color: "var(--text)" }}>
             Software Engineer.<br />Now expanding into AI Engineering.
           </h1>
-          <p className="mt-7 max-w-lg" style={{ color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
+          <p className="nk-fade-in mt-7 max-w-lg" style={{ animationDelay: "230ms", color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
             {yearsExp}+ years building production backend systems — now going deep on LLM fine-tuning,
             RAG, and AI security to bring both worlds into one practice.
           </p>
-          <div className="mt-9 flex flex-wrap items-center gap-4">
+          <div className="nk-fade-in mt-9 flex flex-wrap items-center gap-4" style={{ animationDelay: "300ms" }}>
             <a href={`mailto:${profile.email}`} className="nk-btn-primary" style={{ padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem" }}>Get in touch</a>
             <a href="#projects" className="nk-btn-secondary" style={{ padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem", textDecoration: "none" }}>See the work</a>
           </div>
-          <span className="mt-6 flex items-center gap-1.5 text-sm" style={{ color: "var(--text-faint)" }}>
+          <span className="nk-fade-in mt-6 flex items-center gap-1.5 text-sm" style={{ animationDelay: "300ms", color: "var(--text-faint)" }}>
             <MapPin size={14} /> Karachi, Pakistan
           </span>
 
-          <div className="mt-16 grid grid-cols-3 max-w-md gap-4 sm:gap-8">
+          <div className="nk-fade-in mt-16 grid grid-cols-3 max-w-md gap-4 sm:gap-8" style={{ animationDelay: "370ms" }}>
             {heroStats.map(([num, label]) => (
               <div key={label}>
                 <div className="nk-mono" style={{ fontSize: "1.7rem", color: "var(--text)", fontWeight: 600 }}>{num}</div>
@@ -507,32 +529,43 @@ export default function Portfolio() {
                     <div
                       className="flex items-center justify-center"
                       style={{
-                        height: p.size === "lg" ? "150px" : "110px", position: "relative",
-                        background: "linear-gradient(135deg, var(--accent-soft), var(--teal-soft))",
-                        backgroundImage: "linear-gradient(135deg, var(--accent-soft), var(--teal-soft)), radial-gradient(var(--border-hover) 1px, transparent 1px)",
-                        backgroundSize: "100% 100%, 16px 16px",
+                        height: p.size === "lg" ? "220px" : "170px", position: "relative", overflow: "hidden",
+                        background: p.screenshot ? "var(--bg-elev-2)" : "linear-gradient(135deg, var(--accent-soft), var(--teal-soft))",
+                        backgroundImage: p.screenshot ? undefined : "linear-gradient(135deg, var(--accent-soft), var(--teal-soft)), radial-gradient(var(--border-hover) 1px, transparent 1px)",
+                        backgroundSize: p.screenshot ? undefined : "100% 100%, 16px 16px",
                         borderBottom: "1px solid var(--border)",
                       }}
                     >
+                      {p.screenshot && (
+                        <img
+                          src={p.screenshot}
+                          alt={`Screenshot of the ${p.name} homepage`}
+                          loading="lazy"
+                          decoding="async"
+                          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
+                        />
+                      )}
                       {i === 0 && (
-                        <span className="nk-mono" style={{ position: "absolute", top: "14px", left: "16px", fontSize: "0.68rem", color: "var(--accent)", background: "var(--bg-elev)", border: "1px solid var(--border-hover)", padding: "3px 10px", borderRadius: "20px" }}>
+                        <span className="nk-mono" style={{ position: "absolute", top: "14px", left: "16px", fontSize: "0.68rem", color: "var(--accent)", background: "var(--bg-elev)", border: "1px solid var(--border-hover)", padding: "3px 10px", borderRadius: "20px", zIndex: 1 }}>
                           ★ Featured
                         </span>
                       )}
-                      <Icon size={p.size === "lg" ? 40 : 30} style={{ color: "var(--accent)" }} aria-hidden="true" />
+                      {!p.screenshot && (
+                        <Icon size={p.size === "lg" ? 40 : 30} style={{ color: "var(--teal)" }} aria-hidden="true" />
+                      )}
                     </div>
                     <div style={{ padding: p.size === "lg" ? "2rem" : "1.75rem" }}>
                       <h3 style={{ fontSize: p.size === "lg" ? "1.5rem" : "1.15rem", fontWeight: 700, color: "var(--text)", marginBottom: "0.65rem" }}>{p.name}</h3>
                       <p className="text-sm mb-5" style={{ color: "var(--text-dim)", lineHeight: 1.65, maxWidth: p.size === "lg" ? "60ch" : "none" }}>{p.tagline}</p>
                       <div className="flex flex-wrap gap-2 mb-6">
-                        {p.tags.map((t) => <TechTag key={t} label={t} className={t.includes("AI") ? "nk-tag-ai" : ""} />)}
+                        {p.tags.map((t) => <TechTag key={t} label={t} />)}
                       </div>
                       <div className="flex gap-5 text-sm">
                         <a href={p.github} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-1.5 font-medium" style={{ color: "var(--text)" }}>
                           <Github size={15} /> Code
                         </a>
                         {p.live && (
-                          <a href={p.live} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-1.5 font-medium" style={{ color: "var(--accent)" }}>
+                          <a href={p.live} target="_blank" rel="noreferrer" className="nk-link nk-live-link flex items-center gap-1.5 font-medium" style={{ color: "var(--accent)" }}>
                             Live <ArrowUpRight size={14} />
                           </a>
                         )}
@@ -646,7 +679,7 @@ export default function Portfolio() {
           <div className="grid md:grid-cols-2 gap-4">
             {articles.map((a, i) => (
               <Reveal key={a.url} delay={i * 60}>
-                <a href={a.url} target="_blank" rel="noreferrer" className="nk-glass nk-card" style={{ display: "block", borderRadius: "12px", padding: "1.4rem", textDecoration: "none" }}>
+                <a href={a.url} target="_blank" rel="noreferrer" className="nk-glass nk-card nk-live-link" style={{ display: "block", borderRadius: "12px", padding: "1.4rem", textDecoration: "none" }}>
                   <div className="flex items-start justify-between gap-3">
                     <h3 style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--text)", lineHeight: 1.4 }}>{a.title}</h3>
                     <ArrowUpRight size={15} style={{ color: "var(--text-faint)", flexShrink: 0, marginTop: 2 }} />
@@ -656,7 +689,7 @@ export default function Portfolio() {
             ))}
           </div>
           <Reveal delay={400}>
-            <a href={profile.medium} target="_blank" rel="noreferrer" className="nk-link inline-flex items-center gap-1.5 text-sm mt-8" style={{ color: "var(--accent)" }}>
+            <a href={profile.medium} target="_blank" rel="noreferrer" className="nk-link nk-live-link inline-flex items-center gap-1.5 text-sm mt-8" style={{ color: "var(--accent)" }}>
               Read more on Medium <ArrowUpRight size={14} />
             </a>
           </Reveal>
