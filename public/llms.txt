@@ -1,0 +1,12 @@
+# Neha Khan — Software Engineer / AI Engineering
+
+> Portfolio site for Neha Khan, a software engineer with 4+ years building enterprise backend systems (Java, Spring Boot, MERN), now specializing in AI engineering: LLM fine-tuning, RAG, and AI security.
+
+- [Portfolio](https://neha-khan-portfolio-gamma.vercel.app/): Experience, projects, skills, certifications, and writing.
+- [GitHub](https://github.com/NehaKhann): Source code for deployed projects.
+- [LinkedIn](https://www.linkedin.com/in/neha-khann/): Professional profile.
+- [Medium](https://medium.com/@n.nehakhan333): Technical write-ups on LLMs, fine-tuning, and AI security.
+
+## Contact
+
+- Email: n.nehakhan333@gmail.com
