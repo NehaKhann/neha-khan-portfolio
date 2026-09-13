@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon, Network, ShieldCheck, GraduationCap, Calendar } from "lucide-react";
+import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon, Network, ShieldCheck, GraduationCap, Calendar, Download } from "lucide-react";
 import { profile, getYearsOfExperience, getHeroStats, experience, projects, certifications, education, articles, skillGroups } from "./data.js";
 import { TechTag, categoryMeta } from "./techIcons.jsx";
 import { SiMedium } from "react-icons/si";
@@ -363,6 +363,7 @@ export default function Portfolio() {
 
   const yearsExp = getYearsOfExperience();
   const heroStats = getHeroStats(yearsExp);
+  const resumeUrl = "/neha-khan-resume.pdf";
 
   return (
     <div className="nk-root nk-sans" style={{ minHeight: "100vh", ...themes[theme] }}>
@@ -383,6 +384,9 @@ export default function Portfolio() {
             {sections.map(([href, label]) => (
               <NavLink key={href} href={href} active={activeSection === href.slice(1)}>{label}</NavLink>
             ))}
+            <a href={resumeUrl} download="Neha-Khan-Resume.pdf" className="nk-sans nk-link nk-navlink text-sm flex items-center gap-1.5">
+              <Download size={14} aria-hidden="true" /> Resume
+            </a>
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
@@ -411,8 +415,17 @@ export default function Portfolio() {
               <NavLink key={href} href={href} onClick={() => setMenuOpen(false)} className="block py-2.5" active={activeSection === href.slice(1)}>{label}</NavLink>
             ))}
             <a
+              href={resumeUrl}
+              download="Neha-Khan-Resume.pdf"
+              className="nk-btn-secondary text-center mt-3 flex items-center justify-center gap-2"
+              style={{ padding: "10px 16px", borderRadius: "6px", fontSize: "0.9rem" }}
+              onClick={() => setMenuOpen(false)}
+            >
+              <Download size={15} aria-hidden="true" /> Download Resume
+            </a>
+            <a
               href={`mailto:${profile.email}`}
-              className="nk-btn-primary text-center mt-3"
+              className="nk-btn-primary text-center mt-2"
               style={{ padding: "10px 16px", borderRadius: "6px", fontSize: "0.9rem" }}
               onClick={() => setMenuOpen(false)}
             >
@@ -781,6 +794,14 @@ export default function Portfolio() {
                 <SiMedium size={13} aria-hidden="true" />
               </SocialIconLink>
             </div>
+            <a
+              href={resumeUrl}
+              download="Neha-Khan-Resume.pdf"
+              className="nk-link inline-flex items-center gap-1.5 text-xs mt-7"
+              style={{ color: "var(--text-dim)" }}
+            >
+              <Download size={13} aria-hidden="true" /> Download résumé (PDF)
+            </a>
           </Reveal>
         </div>
         <div style={{ borderTop: "1px solid var(--border)" }}>
