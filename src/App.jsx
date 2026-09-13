@@ -281,10 +281,10 @@ function SocialIconLink({ href, label, children }) {
 function NetworkGraphic({ className = "" }) {
   // A small, deliberately sparse node graph — a few labeled connections
   // rather than a dense mesh, so it reads as a diagram, not noise.
-  const x1 = 60, x2 = 230, x3 = 400;
-  const layer1 = [140, 320];
-  const layer2 = [90, 230, 370];
-  const layer3 = [160, 320];
+  const x1 = 30, x2 = 230, x3 = 430;
+  const layer1 = [60, 400];
+  const layer2 = [40, 230, 420];
+  const layer3 = [80, 400];
   const links = [
     [x1, layer1[0], x2, layer2[0]],
     [x1, layer1[0], x2, layer2[1]],
@@ -380,7 +380,7 @@ export default function Portfolio() {
       <header className="nk-nav" style={{ position: "sticky", top: 0, zIndex: 40 }}>
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
           <span className="nk-mono text-sm" style={{ color: "var(--text)" }}>neha<span style={{ color: "var(--accent)" }}>.</span>khan</span>
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-5">
             {sections.map(([href, label]) => (
               <NavLink key={href} href={href} active={activeSection === href.slice(1)}>{label}</NavLink>
             ))}
@@ -396,7 +396,7 @@ export default function Portfolio() {
             </button>
             <a href={`mailto:${profile.email}`} className="nk-btn-primary" style={{ padding: "10px 16px", borderRadius: "6px", fontSize: "0.85rem", display: "inline-flex", alignItems: "center", minHeight: "40px" }}>Get in touch</a>
           </nav>
-          <div className="md:hidden flex items-center gap-3">
+          <div className="lg:hidden flex items-center gap-3">
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
@@ -410,7 +410,7 @@ export default function Portfolio() {
           </div>
         </div>
         {menuOpen && (
-          <div className="md:hidden flex flex-col gap-1 px-6 pb-5">
+          <div className="lg:hidden flex flex-col gap-1 px-6 pb-5">
             {sections.map(([href, label]) => (
               <NavLink key={href} href={href} onClick={() => setMenuOpen(false)} className="block py-2.5" active={activeSection === href.slice(1)}>{label}</NavLink>
             ))}
@@ -438,10 +438,10 @@ export default function Portfolio() {
       <main id="main-content">
       {/* HERO */}
       <section className="nk-glow-violet" style={{ position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "-8%", right: "-6%", width: "56%", height: "120%", opacity: 0.9, pointerEvents: "none" }} className="hidden lg:block">
-          <NetworkGraphic />
-        </div>
         <div className="max-w-6xl mx-auto px-6 pt-24 pb-28 md:pt-32 md:pb-36" style={{ position: "relative" }}>
+          <div style={{ position: "absolute", top: "-6%", right: "-2%", width: "54%", height: "112%", opacity: 0.9, pointerEvents: "none" }} className="hidden lg:block">
+            <NetworkGraphic />
+          </div>
           <div className="nk-fade-in flex flex-wrap items-center justify-between gap-4 mb-8">
             <div className="flex items-center gap-3">
               <Avatar />
