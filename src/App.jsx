@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon } from "lucide-react";
+import { profile, heroStats, experience, projects, certifications, education, articles, skillGroups } from "./data.js";
 
 const themes = {
   dark: {
     "--bg": "#0A0E17", "--bg-elev": "#10161F", "--bg-elev-2": "#151C27",
     "--border": "rgba(255,255,255,0.08)", "--border-hover": "rgba(255,255,255,0.16)",
-    "--text": "#E8ECF1", "--text-dim": "#8B97A8", "--text-faint": "#566173",
+    "--text": "#E8ECF1", "--text-dim": "#8B97A8", "--text-faint": "#78818F",
     "--accent": "#8B6FFF", "--accent-soft": "rgba(139,111,255,0.12)",
     "--teal": "#34D6C4", "--teal-soft": "rgba(52,214,196,0.12)",
     "--nav-bg": "rgba(10,14,23,0.72)",
@@ -13,9 +14,9 @@ const themes = {
   light: {
     "--bg": "#F7F5F0", "--bg-elev": "#FFFFFF", "--bg-elev-2": "#EFEBE2",
     "--border": "rgba(15,23,32,0.10)", "--border-hover": "rgba(15,23,32,0.22)",
-    "--text": "#12181F", "--text-dim": "#4B5768", "--text-faint": "#7C8798",
+    "--text": "#12181F", "--text-dim": "#4B5768", "--text-faint": "#687180",
     "--accent": "#6D4FE0", "--accent-soft": "rgba(109,79,224,0.10)",
-    "--teal": "#0F9C8C", "--teal-soft": "rgba(15,156,140,0.10)",
+    "--teal": "#0C7E71", "--teal-soft": "rgba(15,156,140,0.10)",
     "--nav-bg": "rgba(247,245,240,0.78)",
   },
 };
@@ -30,7 +31,7 @@ const styles = `
     --border-hover: rgba(255,255,255,0.16);
     --text: #E8ECF1;
     --text-dim: #8B97A8;
-    --text-faint: #566173;
+    --text-faint: #78818F;
     --accent: #8B6FFF;
     --accent-soft: rgba(139,111,255,0.12);
     --teal: #34D6C4;
@@ -55,7 +56,7 @@ const styles = `
                 radial-gradient(ellipse 45% 40% at 80% 60%, rgba(52,214,196,0.14), transparent 60%);
   }
   .nk-tag {
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     padding: 3px 10px;
     border-radius: 20px;
     border: 1px solid var(--border);
@@ -108,6 +109,11 @@ const styles = `
     .nk-reveal { opacity: 1; transform: none; transition: none; }
     .nk-card:hover, .nk-btn-primary:hover { transform: none; }
   }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
 `;
 
 function useReveal() {
@@ -135,60 +141,9 @@ function Reveal({ children, className = "", delay = 0 }) {
   );
 }
 
-const experience = [
-  { company: "SIBISOFT", role: "Software Engineer I", period: "Oct 2024 — Nov 2025",
-    bullets: ["Developed enterprise backend modules using Core Java and Spring Boot for business logic and database interactions", "Modernized legacy components by migrating selected Java modules to TypeScript", "Optimized MySQL queries, improving data retrieval performance"] },
-  { company: "Bank Al Habib Limited", role: "Software Engineer", period: "Oct 2022 — Sept 2024",
-    bullets: ["Migrated monolithic systems to microservices, cutting deployment time by 50%", "Built responsive Vue.js frontend modules with REST API integration, improving processing efficiency by 40%", "Reduced defect rates by 35% through clean architecture principles"] },
-  { company: "WOIT Solutions", role: "Full Stack Web Engineer", period: "May 2022 — Oct 2022",
-    bullets: ["Led a team of 5 building a React + Redux frontend, improving page load by 40%", "Built an automated LinkedIn Sales Navigator chatbot with Puppeteer, lifting engagement 30%"] },
-  { company: "Bytecorp", role: "Full Stack Developer", period: "Feb 2022 — July 2022",
-    bullets: ["Contributed to Autilent's deployment, improving real-time monitoring by 50%", "Boosted system responsiveness 45% using Jetson Nano, Grafana, and RabbitMQ"] },
-];
-
-const projects = [
-  { name: "MCP Trust Registry", size: "lg",
-    tagline: "A live registry that scans and scores MCP tools for trustworthiness. Built solo, deployed for $0/month — and it once caught a real incident.",
-    tags: ["Full-Stack", "AI Security"], github: "https://github.com/NehaKhann/mcp-trust-registry", live: "https://mcp-trust-registry.vercel.app" },
-  { name: "SpringGuard", size: "sm",
-    tagline: "Spring Boot code auditor — 21 security rules plus an AI review pass, grading Java code A–F with AI-proposed fixes.",
-    tags: ["Spring Boot", "AI/ML"], github: "https://github.com/NehaKhann/springguard-backend", live: "https://springguard-frontend.vercel.app" },
-  { name: "SME Cash-Flow Explainer", size: "sm",
-    tagline: "Raw bank CSV to auditable risk memo. Metrics computed deterministically — the LLM only explains, never invents.",
-    tags: ["FastAPI", "AI/ML"], github: "https://github.com/NehaKhann/sme-cashflow-explainer", live: null },
-  { name: "AI Engineering Journey", size: "md",
-    tagline: "A self-directed curriculum — LLM foundations, fine-tuning, LoRA/QLoRA, RAG — documented weekly with published write-ups.",
-    tags: ["LLMs", "RAG"], github: "https://github.com/NehaKhann/ai-engineering-journey", live: null },
-];
-
-const certifications = [
-  "Quarkus with MicroProfile & Kubernetes — 3-day training (Dec 2023)",
-  "Data Modeling using AI and Power BI — 2-day training (Nov 2023)",
-  "Kanz AI Training Hackathon — Certificate of Participation",
-  "The Complete 2024 Web Development Bootcamp",
-];
-
-const articles = [
-  { title: "I Compared LoRA vs DoRA — DoRA Was Slower and Less Accurate. Here's Why.", url: "https://medium.com/codetodeploy/i-compared-lora-vs-dora-dora-was-slower-and-less-accurate-heres-why-e0dd7d19627d" },
-  { title: "LoRA Explained With Spreadsheets — How to Train a Model Without Touching Its Weights", url: "https://medium.com/towards-artificial-intelligence/lora-explained-with-spreadsheets-how-to-train-a-model-without-touching-its-weights-3d60b707c084" },
-  { title: "How I Fit a Model That Shouldn't Fit on a 6GB Laptop GPU", url: "https://medium.com/towards-artificial-intelligence/how-i-fit-a-model-that-shouldnt-fit-on-a-6gb-laptop-gpu-e8376e3af1d5" },
-  { title: "From Gandalf to Garak — Automating the AI Attacks I Used to Type by Hand", url: "https://medium.com/towards-artificial-intelligence/from-gandalf-to-garak-automating-the-ai-attacks-i-used-to-type-by-hand-9e588fff54ad" },
-  { title: "Understanding Large Language Models — From Neural Networks to Production Inference", url: "https://medium.com/towards-artificial-intelligence/understanding-large-language-models-from-neural-networks-to-production-inference-02303c86eda9" },
-  { title: "I Tried to Break an AI's Security — Here's Everything I Learned as a Complete Beginner", url: "https://medium.com/towards-artificial-intelligence/i-tried-to-break-an-ais-security-here-s-everything-i-learned-as-a-complete-beginner-56ac3d6e9fd9" },
-];
-
-const skillGroups = [
-  { label: "Modern Backend", items: ["Node.js", "Express.js", "Spring Boot", "Quarkus"] },
-  { label: "AI / ML", items: ["LLM Fundamentals", "LoRA / QLoRA", "Hugging Face", "PyTorch", "LangChain", "RAG"], ai: true },
-  { label: "Frontend", items: ["React.js", "Redux", "TypeScript", "JavaScript"] },
-  { label: "Enterprise Java", items: ["Core Java", "JSP", "Struts", "JSF"] },
-  { label: "Databases", items: ["MS SQL Server", "MySQL", "MongoDB"] },
-  { label: "Tools", items: ["Git", "Docker", "Grafana", "Keycloak SSO"] },
-];
-
-function NavLink({ href, children, onClick }) {
+function NavLink({ href, children, onClick, className = "" }) {
   return (
-    <a href={href} onClick={onClick} className="nk-sans nk-link text-sm">{children}</a>
+    <a href={href} onClick={onClick} className={`nk-sans nk-link text-sm ${className}`}>{children}</a>
   );
 }
 
@@ -238,10 +193,18 @@ function NetworkGraphic({ className = "" }) {
   );
 }
 
+function getInitialTheme() {
+  if (typeof window === "undefined") return "dark";
+  const saved = window.localStorage.getItem("nk-theme");
+  if (saved === "dark" || saved === "light") return saved;
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState(getInitialTheme);
   useEffect(() => { document.body.style.margin = "0"; }, []);
+  useEffect(() => { window.localStorage.setItem("nk-theme", theme); }, [theme]);
 
   const sections = [["#about", "About"], ["#experience", "Experience"], ["#projects", "Projects"], ["#skills", "Skills"], ["#contact", "Contact"]];
 
@@ -252,37 +215,48 @@ export default function Portfolio() {
       <header className="nk-nav" style={{ position: "sticky", top: 0, zIndex: 40 }}>
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
           <span className="nk-mono text-sm" style={{ color: "var(--text)" }}>neha<span style={{ color: "var(--accent)" }}>.</span>khan</span>
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             {sections.map(([href, label]) => <NavLink key={href} href={href}>{label}</NavLink>)}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
-              style={{ background: "var(--bg-elev)", border: "1px solid var(--border)", borderRadius: "6px", padding: "7px", color: "var(--text)", display: "flex", cursor: "pointer" }}
+              style={{ background: "var(--bg-elev)", border: "1px solid var(--border)", borderRadius: "6px", width: "40px", height: "40px", color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}
             >
               {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
             </button>
-            <a href="mailto:n.nehakhan333@gmail.com" className="nk-btn-primary" style={{ padding: "8px 16px", borderRadius: "6px", fontSize: "0.85rem" }}>Get in touch</a>
+            <a href={`mailto:${profile.email}`} className="nk-btn-primary" style={{ padding: "10px 16px", borderRadius: "6px", fontSize: "0.85rem", display: "inline-flex", alignItems: "center", minHeight: "40px" }}>Get in touch</a>
           </nav>
           <div className="md:hidden flex items-center gap-3">
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
-              style={{ background: "var(--bg-elev)", border: "1px solid var(--border)", borderRadius: "6px", padding: "7px", color: "var(--text)", display: "flex", cursor: "pointer" }}
+              style={{ background: "var(--bg-elev)", border: "1px solid var(--border)", borderRadius: "6px", width: "40px", height: "40px", color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}
             >
               {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
             </button>
-            <button style={{ color: "var(--text)", background: "none", border: "none" }} onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+            <button style={{ color: "var(--text)", background: "none", border: "none", width: "40px", height: "40px", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }} onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
               {menuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
         {menuOpen && (
-          <div className="md:hidden flex flex-col gap-4 px-6 pb-5">
-            {sections.map(([href, label]) => <NavLink key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</NavLink>)}
+          <div className="md:hidden flex flex-col gap-1 px-6 pb-5">
+            {sections.map(([href, label]) => (
+              <NavLink key={href} href={href} onClick={() => setMenuOpen(false)} className="block py-2.5">{label}</NavLink>
+            ))}
+            <a
+              href={`mailto:${profile.email}`}
+              className="nk-btn-primary text-center mt-3"
+              style={{ padding: "10px 16px", borderRadius: "6px", fontSize: "0.9rem" }}
+              onClick={() => setMenuOpen(false)}
+            >
+              Get in touch
+            </a>
           </div>
         )}
       </header>
 
+      <main>
       {/* HERO */}
       <section className="nk-glow-violet" style={{ position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "-8%", right: "-6%", width: "56%", height: "120%", opacity: 0.9, pointerEvents: "none" }} className="hidden md:block">
@@ -302,12 +276,12 @@ export default function Portfolio() {
           <div className="mt-9 flex flex-wrap items-center gap-5">
             <a href="#projects" className="nk-btn-primary" style={{ padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem" }}>See the work</a>
             <span className="flex items-center gap-1.5 text-sm" style={{ color: "var(--text-faint)" }}>
-              <MapPin size={14} /> Karachi — open to Gulf, Malaysia &amp; Germany
+              <MapPin size={14} /> {profile.location}
             </span>
           </div>
 
-          <div className="mt-16 grid grid-cols-3 max-w-md gap-8">
-            {[["4+", "years exp"], ["50%", "faster deploys shipped"], ["4", "AI/full-stack projects"]].map(([num, label]) => (
+          <div className="mt-16 grid grid-cols-3 max-w-md gap-4 sm:gap-8">
+            {heroStats.map(([num, label]) => (
               <div key={label}>
                 <div className="nk-mono" style={{ fontSize: "1.7rem", color: "var(--text)", fontWeight: 600 }}>{num}</div>
                 <div className="text-xs mt-1" style={{ color: "var(--text-faint)" }}>{label}</div>
@@ -437,7 +411,7 @@ export default function Portfolio() {
             {skillGroups.map((g, i) => (
               <Reveal key={g.label} delay={i * 60}>
                 <div className="nk-glass nk-card" style={{ borderRadius: "12px", padding: "1.5rem", height: "100%" }}>
-                  <h4 className="text-sm font-semibold mb-3" style={{ color: g.ai ? "var(--teal)" : "var(--text)" }}>{g.label}</h4>
+                  <h3 className="text-sm font-semibold mb-3" style={{ color: g.ai ? "var(--teal)" : "var(--text)" }}>{g.label}</h3>
                   <div className="flex flex-wrap gap-1.5">
                     {g.items.map((item) => <span key={item} className="nk-tag">{item}</span>)}
                   </div>
@@ -460,9 +434,9 @@ export default function Portfolio() {
           <Reveal>
             <div className="nk-glass nk-card" style={{ borderRadius: "14px", padding: "2rem", height: "100%" }}>
               <p className="nk-mono text-xs mb-2" style={{ color: "var(--text-faint)" }}>Education</p>
-              <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--text)" }}>NED University of Engineering &amp; Technology</h3>
-              <p className="text-sm mt-1" style={{ color: "var(--text-dim)" }}>B.E. Software Engineering — Aug 2018 to March 2022</p>
-              <p className="nk-mono text-sm mt-3" style={{ color: "var(--teal)" }}>3.876 CGPA — Ranked 7th of 101</p>
+              <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--text)" }}>{education.school}</h3>
+              <p className="text-sm mt-1" style={{ color: "var(--text-dim)" }}>{education.degree}</p>
+              <p className="nk-mono text-sm mt-3" style={{ color: "var(--teal)" }}>{education.honor}</p>
             </div>
           </Reveal>
           <Reveal delay={80}>
@@ -493,7 +467,7 @@ export default function Portfolio() {
               <Reveal key={a.url} delay={i * 60}>
                 <a href={a.url} target="_blank" rel="noreferrer" className="nk-glass nk-card" style={{ display: "block", borderRadius: "12px", padding: "1.4rem", textDecoration: "none" }}>
                   <div className="flex items-start justify-between gap-3">
-                    <h4 style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--text)", lineHeight: 1.4 }}>{a.title}</h4>
+                    <h3 style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--text)", lineHeight: 1.4 }}>{a.title}</h3>
                     <ArrowUpRight size={15} style={{ color: "var(--text-faint)", flexShrink: 0, marginTop: 2 }} />
                   </div>
                 </a>
@@ -501,12 +475,13 @@ export default function Portfolio() {
             ))}
           </div>
           <Reveal delay={400}>
-            <a href="https://medium.com/@n.nehakhan333" target="_blank" rel="noreferrer" className="nk-link inline-flex items-center gap-1.5 text-sm mt-8" style={{ color: "var(--accent)" }}>
+            <a href={profile.medium} target="_blank" rel="noreferrer" className="nk-link inline-flex items-center gap-1.5 text-sm mt-8" style={{ color: "var(--accent)" }}>
               Read more on Medium <ArrowUpRight size={14} />
             </a>
           </Reveal>
         </div>
       </section>
+      </main>
 
       {/* CONTACT */}
       <footer id="contact" className="nk-glow-violet" style={{ borderTop: "1px solid var(--border)" }}>
@@ -516,17 +491,17 @@ export default function Portfolio() {
             <h2 style={{ fontSize: "clamp(1.9rem, 4vw, 2.8rem)", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", marginBottom: "1.2rem" }}>
               Let's build something together.
             </h2>
-            <a href="mailto:n.nehakhan333@gmail.com" className="nk-link" style={{ fontSize: "1.2rem", color: "var(--text)", fontWeight: 600 }}>
-              n.nehakhan333@gmail.com
+            <a href={`mailto:${profile.email}`} className="nk-link" style={{ fontSize: "1.2rem", color: "var(--text)", fontWeight: 600, wordBreak: "break-word" }}>
+              {profile.email}
             </a>
-            <div className="flex justify-center gap-7 mt-10">
-              <a href="https://www.linkedin.com/in/neha-khann/" target="_blank" rel="noreferrer" className="nk-link flex items-center gap-2">
+            <div className="flex flex-wrap justify-center gap-x-7 gap-y-4 mt-10">
+              <a href={profile.linkedin} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-2">
                 <Linkedin size={18} /> LinkedIn
               </a>
-              <a href="https://github.com/NehaKhann" target="_blank" rel="noreferrer" className="nk-link flex items-center gap-2">
+              <a href={profile.github} target="_blank" rel="noreferrer" className="nk-link flex items-center gap-2">
                 <Github size={18} /> GitHub
               </a>
-              <a href="mailto:n.nehakhan333@gmail.com" className="nk-link flex items-center gap-2">
+              <a href={`mailto:${profile.email}`} className="nk-link flex items-center gap-2">
                 <Mail size={18} /> Email
               </a>
             </div>
