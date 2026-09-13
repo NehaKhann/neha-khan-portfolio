@@ -74,6 +74,7 @@ const styles = `
     padding: 3px 10px;
     border-radius: 20px;
     border: 1px solid var(--border);
+    background: var(--bg-elev-2);
     color: var(--text-dim);
     white-space: nowrap;
     letter-spacing: 0.01em;
@@ -351,7 +352,7 @@ function NetworkGraphic({ className = "" }) {
 function highlightMetrics(text) {
   return text.split(/(\d+%|\$\d[\d,.]*[kKmM]?)/g).map((part, i) =>
     /^(\d+%|\$\d)/.test(part)
-      ? <strong key={i} style={{ fontWeight: 700, color: "var(--text)" }}>{part}</strong>
+      ? <strong key={i} style={{ fontWeight: 700, color: "var(--accent)" }}>{part}</strong>
       : part
   );
 }
@@ -687,20 +688,24 @@ export default function Portfolio() {
             {experience.map((job, i) => (
               <Reveal key={job.company} delay={i * 80}>
                 <div className="nk-glass nk-card" style={{ borderRadius: "12px", padding: "1.25rem 1.5rem" }}>
-                  <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 mb-2.5">
+                  <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 mb-2.5">
                     <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)" }}>{job.company}</h3>
-                    <span className="nk-mono text-xs" style={{ color: "var(--teal)" }}>{job.role}</span>
+                    <span className="nk-mono text-xs" style={{ color: "var(--teal)", fontWeight: 600 }}>{job.role}</span>
                     <span
-                      className="nk-mono ml-auto inline-flex items-center gap-1"
-                      style={{ color: "var(--text-faint)", fontSize: "0.7rem", padding: "2px 4px" }}
+                      className="nk-mono ml-auto inline-flex items-center gap-1.5"
+                      style={{
+                        color: "var(--accent)", fontWeight: 600, fontSize: "0.8rem",
+                        background: "var(--accent-soft)", border: "1px solid rgba(139,111,255,0.3)",
+                        padding: "4px 11px", borderRadius: "20px",
+                      }}
                     >
-                      <Calendar size={11} aria-hidden="true" style={{ flexShrink: 0 }} /> {job.period}
+                      <Calendar size={13} aria-hidden="true" style={{ flexShrink: 0 }} /> {job.period}
                     </span>
                   </div>
                   <ul className="space-y-1 mb-3">
                     {job.bullets.map((b, j) => (
                       <li key={j} className="text-sm flex gap-2" style={{ color: "var(--text-dim)", lineHeight: 1.55, maxWidth: "70ch" }}>
-                        <span aria-hidden="true" style={{ color: "var(--text-faint)", flexShrink: 0 }}>&ndash;</span>
+                        <span aria-hidden="true" style={{ color: "var(--accent)", flexShrink: 0, fontSize: "0.6rem", lineHeight: 1.9 }}>&#9679;</span>
                         <span>{highlightMetrics(b)}</span>
                       </li>
                     ))}
