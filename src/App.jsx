@@ -550,8 +550,11 @@ export default function Portfolio() {
           <div className="grid md:grid-cols-2 gap-6">
             {projects.map((p, i) => {
               const Icon = projectIcons[p.name] || Sparkles;
+              const nonFeaturedCount = projects.filter((x) => x.size !== "lg").length;
+              const isTrailingOdd = i === projects.length - 1 && nonFeaturedCount % 2 === 1;
+              const spanFull = p.size === "lg" || isTrailingOdd;
               return (
-                <Reveal key={p.name} delay={i * 90} className={p.size === "lg" ? "md:col-span-2" : ""}>
+                <Reveal key={p.name} delay={i * 90} className={spanFull ? "md:col-span-2" : ""}>
                   <div className="nk-glass nk-card" style={{ borderRadius: "16px", overflow: "hidden", height: "100%", position: "relative" }}>
                     <div
                       className="flex items-center justify-center"

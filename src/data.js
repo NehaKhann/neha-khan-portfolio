@@ -79,6 +79,10 @@ export const projects = [
   { name: "AI Engineering Journey", size: "md",
     tagline: "A self-directed curriculum — LLM foundations, fine-tuning, LoRA/QLoRA, RAG — documented weekly with published write-ups.",
     tags: ["LLMs", "RAG"], github: "https://github.com/NehaKhann/ai-engineering-journey", live: null, screenshot: null },
+  { name: "SME Cash-Flow Explainer", size: "sm",
+    tagline: "Turns raw bank CSVs into audit-ready risk memos — every underwriting metric computed deterministically, with an LLM layer that explains but never invents the numbers.",
+    tags: ["FastAPI", "AI/ML"], github: "https://github.com/NehaKhann/sme-cashflow-explainer", live: "https://cashflow-pi-liard.vercel.app",
+    screenshot: "/project-sme-cashflow.jpg" },
 ];
 
 export const certifications = [
