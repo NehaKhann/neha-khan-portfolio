@@ -439,7 +439,7 @@ export default function Portfolio() {
       {/* HERO */}
       <section className="nk-glow-violet" style={{ position: "relative", overflow: "hidden" }}>
         <div className="max-w-6xl mx-auto px-6 pt-24 pb-28 md:pt-32 md:pb-36" style={{ position: "relative" }}>
-          <div style={{ position: "absolute", top: "-6%", right: "-2%", width: "54%", height: "112%", opacity: 0.9, pointerEvents: "none" }} className="hidden lg:block">
+          <div style={{ position: "absolute", top: "-6%", right: "-2%", opacity: 0.9, pointerEvents: "none" }} className="hidden lg:block w-[38%] h-[95%] xl:w-[48%] xl:h-[106%] 2xl:w-[54%] 2xl:h-[112%]">
             <NetworkGraphic />
           </div>
           <div className="nk-fade-in flex flex-wrap items-center justify-between gap-4 mb-8">
