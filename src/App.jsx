@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon, Network, ShieldCheck, GraduationCap } from "lucide-react";
+import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon, Network, ShieldCheck, GraduationCap, Calendar } from "lucide-react";
 import { profile, getYearsOfExperience, getHeroStats, experience, projects, certifications, education, articles, skillGroups } from "./data.js";
 import { TechTag, categoryMeta } from "./techIcons.jsx";
 import { SiMedium } from "react-icons/si";
@@ -622,14 +622,19 @@ export default function Portfolio() {
             {experience.map((job, i) => (
               <Reveal key={job.company} delay={i * 80}>
                 <div className="nk-glass nk-card" style={{ borderRadius: "12px", padding: "1.75rem" }}>
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-3">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-4">
                     <h3 style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--text)" }}>{job.company}</h3>
                     <span className="nk-mono text-xs" style={{ color: "var(--teal)" }}>{job.role}</span>
-                    <span className="nk-mono text-xs ml-auto" style={{ color: "var(--text-faint)" }}>{job.period}</span>
+                    <span
+                      className="nk-mono text-xs ml-auto inline-flex items-center gap-1.5"
+                      style={{ color: "var(--text)", background: "var(--bg-elev-2)", border: "1px solid var(--border)", padding: "5px 12px", borderRadius: "20px" }}
+                    >
+                      <Calendar size={12} aria-hidden="true" style={{ flexShrink: 0 }} /> {job.period}
+                    </span>
                   </div>
-                  <ul className="space-y-1.5 mb-4">
+                  <ul className="space-y-2 mb-4">
                     {job.bullets.map((b, j) => (
-                      <li key={j} className="text-sm" style={{ color: "var(--text-dim)", lineHeight: 1.65, maxWidth: "70ch" }}>{b}</li>
+                      <li key={j} className="text-sm" style={{ color: "var(--text-dim)", lineHeight: 1.7, maxWidth: "70ch" }}>{b}</li>
                     ))}
                   </ul>
                   <div className="flex flex-wrap gap-2">
