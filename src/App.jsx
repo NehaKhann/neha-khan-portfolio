@@ -541,7 +541,7 @@ export default function Portfolio() {
                   <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)" }}>AI Engineer <span className="nk-mono" style={{ fontSize: "0.7rem", fontWeight: 500, color: "var(--teal)" }}>(self-directed)</span></h3>
                   <p className="nk-mono text-xs mt-0.5 mb-2" style={{ color: "var(--text-faint)" }}>2025 — Present</p>
                   <p className="text-sm" style={{ color: "var(--text-dim)", lineHeight: 1.6 }}>
-                    LLM fine-tuning, RAG, AI security — published in {articles.length}+ articles and {projects.length} deployed projects.
+                    Still deep in it — LLM fine-tuning, RAG, AI security — {articles.length}+ articles published, {projects.length} projects shipped.
                   </p>
                 </div>
               </div>
