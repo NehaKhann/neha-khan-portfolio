@@ -97,6 +97,11 @@ const styles = `
     background: var(--teal-soft);
     color: var(--teal);
   }
+  .nk-tag-compact {
+    padding: 2px 8px;
+    font-size: 0.68rem;
+    gap: 4px;
+  }
   .nk-tab {
     cursor: pointer;
     transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
@@ -338,6 +343,16 @@ function NetworkGraphic({ className = "" }) {
         <circle key={`n3-${i}`} cx={x3} cy={y} r="8" fill="var(--accent)" filter="url(#nkGlow)" />
       ))}
     </svg>
+  );
+}
+
+// Bolds measurable figures (e.g. "50%") inline so results stand out
+// through weight alone, without adding colored boxes around them.
+function highlightMetrics(text) {
+  return text.split(/(\d+%|\$\d[\d,.]*[kKmM]?)/g).map((part, i) =>
+    /^(\d+%|\$\d)/.test(part)
+      ? <strong key={i} style={{ fontWeight: 700, color: "var(--text)" }}>{part}</strong>
+      : part
   );
 }
 
@@ -668,27 +683,30 @@ export default function Portfolio() {
               Where I've built things
             </h2>
           </Reveal>
-          <div className="grid gap-5">
+          <div className="grid gap-4">
             {experience.map((job, i) => (
               <Reveal key={job.company} delay={i * 80}>
-                <div className="nk-glass nk-card" style={{ borderRadius: "12px", padding: "1.75rem" }}>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-4">
-                    <h3 style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--text)" }}>{job.company}</h3>
+                <div className="nk-glass nk-card" style={{ borderRadius: "12px", padding: "1.25rem 1.5rem" }}>
+                  <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 mb-2.5">
+                    <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)" }}>{job.company}</h3>
                     <span className="nk-mono text-xs" style={{ color: "var(--teal)" }}>{job.role}</span>
                     <span
-                      className="nk-mono text-xs ml-auto inline-flex items-center gap-1.5"
-                      style={{ color: "var(--text)", background: "var(--bg-elev-2)", border: "1px solid var(--border)", padding: "5px 12px", borderRadius: "20px" }}
+                      className="nk-mono ml-auto inline-flex items-center gap-1"
+                      style={{ color: "var(--text-faint)", fontSize: "0.7rem", padding: "2px 4px" }}
                     >
-                      <Calendar size={12} aria-hidden="true" style={{ flexShrink: 0 }} /> {job.period}
+                      <Calendar size={11} aria-hidden="true" style={{ flexShrink: 0 }} /> {job.period}
                     </span>
                   </div>
-                  <ul className="space-y-2 mb-4">
+                  <ul className="space-y-1 mb-3">
                     {job.bullets.map((b, j) => (
-                      <li key={j} className="text-sm" style={{ color: "var(--text-dim)", lineHeight: 1.7, maxWidth: "70ch" }}>{b}</li>
+                      <li key={j} className="text-sm flex gap-2" style={{ color: "var(--text-dim)", lineHeight: 1.55, maxWidth: "70ch" }}>
+                        <span aria-hidden="true" style={{ color: "var(--text-faint)", flexShrink: 0 }}>&ndash;</span>
+                        <span>{highlightMetrics(b)}</span>
+                      </li>
                     ))}
                   </ul>
-                  <div className="flex flex-wrap gap-2">
-                    {job.tags.map((t) => <TechTag key={t} label={t} />)}
+                  <div className="flex flex-wrap gap-1.5">
+                    {job.tags.map((t) => <TechTag key={t} label={t} className="nk-tag-compact" />)}
                   </div>
                 </div>
               </Reveal>
