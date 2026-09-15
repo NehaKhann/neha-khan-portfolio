@@ -637,25 +637,37 @@ export default function Portfolio() {
               </h2>
 
               <div className="mb-6">
-                <p className="nk-mono text-xs mb-2" style={{ color: "var(--text-faint)" }}>Background</p>
+                <p className="nk-mono text-xs mb-2" style={{ color: "var(--text-faint)", fontWeight: 600, display: "flex", alignItems: "center", gap: "7px" }}>
+                  <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "var(--text-faint)", flexShrink: 0 }} />
+                  Background
+                </p>
                 <p style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
-                  {yearsExp}+ years building enterprise systems in banking and product engineering — Core Java, Spring Boot, Quarkus, and JavaScript frameworks and libraries.
+                  I've spent my career in environments where mistakes are expensive — banking systems, production infrastructure — which shaped how I think about reliability before anything else. That instinct is what I bring into AI work: don't trust a system just because it sounds confident.
                 </p>
               </div>
               <div className="mb-6">
-                <p className="nk-mono text-xs mb-2" style={{ color: "var(--teal)" }}>Now</p>
+                <p className="nk-mono text-xs mb-2" style={{ color: "var(--teal)", fontWeight: 600, display: "flex", alignItems: "center", gap: "7px" }}>
+                  <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "var(--teal)", flexShrink: 0 }} />
+                  Now
+                </p>
                 <p style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
                   Going deep on AI engineering: LLM fundamentals, fine-tuning with LoRA/QLoRA, and AI security testing. Retrieval-augmented generation is the module I'm tackling next.
                 </p>
               </div>
               <div className="mb-6">
-                <p className="nk-mono text-xs mb-2" style={{ color: "var(--text-faint)" }}>Approach</p>
+                <p className="nk-mono text-xs mb-2" style={{ color: "var(--text-faint)", fontWeight: 600, display: "flex", alignItems: "center", gap: "7px" }}>
+                  <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "var(--text-faint)", flexShrink: 0 }} />
+                  Approach
+                </p>
                 <p style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
                   Documenting the process publicly and shipping real, deployed projects — not stopping at tutorials.
                 </p>
               </div>
               <div>
-                <p className="nk-mono text-xs mb-2" style={{ color: "var(--text-faint)" }}>Based in</p>
+                <p className="nk-mono text-xs mb-2" style={{ color: "var(--text-faint)", fontWeight: 600, display: "flex", alignItems: "center", gap: "7px" }}>
+                  <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "var(--text-faint)", flexShrink: 0 }} />
+                  Based in
+                </p>
                 <p style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
                   Karachi, Pakistan — open to relocating for {profile.relocation}.
                 </p>
