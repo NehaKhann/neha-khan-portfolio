@@ -392,7 +392,7 @@ export default function Portfolio() {
   useEffect(() => { document.body.style.margin = "0"; }, []);
   useEffect(() => { window.localStorage.setItem("nk-theme", theme); }, [theme]);
 
-  const sections = [["#about", "About"], ["#projects", "Projects"], ["#experience", "Experience"], ["#skills", "Skills"], ["#contact", "Contact"]];
+  const sections = [["#about", "About"], ["#experience", "Experience"], ["#projects", "Projects"], ["#skills", "Skills"], ["#contact", "Contact"]];
 
   useEffect(() => {
     const ids = sections.map(([href]) => href.slice(1));
@@ -600,11 +600,56 @@ export default function Portfolio() {
         </Reveal>
       </section>
 
+      {/* EXPERIENCE */}
+      <section id="experience">
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <Reveal>
+            <p className="nk-mono text-xs mb-3" style={{ color: "var(--accent)" }}>02 — Experience</p>
+            <h2 style={{ fontSize: "1.9rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", marginBottom: "3rem" }}>
+              Where I've built things
+            </h2>
+          </Reveal>
+          <div className="grid gap-4">
+            {experience.map((job, i) => (
+              <Reveal key={job.company} delay={i * 80}>
+                <div className="nk-glass nk-card" style={{ borderRadius: "12px", padding: "1.25rem 1.5rem" }}>
+                  <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 mb-2.5">
+                    <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)" }}>{job.company}</h3>
+                    <span className="nk-mono text-xs" style={{ color: "var(--teal)", fontWeight: 600 }}>{job.role}</span>
+                    <span
+                      className="nk-mono ml-auto inline-flex items-center gap-1.5"
+                      style={{
+                        color: "var(--accent)", fontWeight: 600, fontSize: "0.8rem",
+                        background: "var(--accent-soft)", border: "1px solid rgba(139,111,255,0.3)",
+                        padding: "4px 11px", borderRadius: "20px",
+                      }}
+                    >
+                      <Calendar size={13} aria-hidden="true" style={{ flexShrink: 0 }} /> {job.period}
+                    </span>
+                  </div>
+                  <ul className="space-y-1 mb-3">
+                    {job.bullets.map((b, j) => (
+                      <li key={j} className="text-sm flex gap-2" style={{ color: "var(--text-dim)", lineHeight: 1.55, maxWidth: "70ch" }}>
+                        <span aria-hidden="true" style={{ color: "var(--accent)", flexShrink: 0, fontSize: "0.6rem", lineHeight: 1.9 }}>&#9679;</span>
+                        <span>{highlightMetrics(b)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex flex-wrap gap-1.5">
+                    {job.tags.map((t) => <TechTag key={t} label={t} className="nk-tag-compact" />)}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* PROJECTS — the centerpiece */}
       <section id="projects" style={{ borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", background: "var(--bg-elev)" }}>
         <div className="max-w-6xl mx-auto px-6 py-24">
           <Reveal>
-            <p className="nk-mono text-xs mb-3" style={{ color: "var(--accent)" }}>02 — Projects</p>
+            <p className="nk-mono text-xs mb-3" style={{ color: "var(--accent)" }}>03 — Projects</p>
             <h2 style={{ fontSize: "2.1rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", marginBottom: "0.5rem" }}>
               Real, deployed work
             </h2>
@@ -693,51 +738,6 @@ export default function Portfolio() {
                 </Reveal>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* EXPERIENCE */}
-      <section id="experience">
-        <div className="max-w-6xl mx-auto px-6 py-24">
-          <Reveal>
-            <p className="nk-mono text-xs mb-3" style={{ color: "var(--accent)" }}>03 — Experience</p>
-            <h2 style={{ fontSize: "1.9rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", marginBottom: "3rem" }}>
-              Where I've built things
-            </h2>
-          </Reveal>
-          <div className="grid gap-4">
-            {experience.map((job, i) => (
-              <Reveal key={job.company} delay={i * 80}>
-                <div className="nk-glass nk-card" style={{ borderRadius: "12px", padding: "1.25rem 1.5rem" }}>
-                  <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 mb-2.5">
-                    <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)" }}>{job.company}</h3>
-                    <span className="nk-mono text-xs" style={{ color: "var(--teal)", fontWeight: 600 }}>{job.role}</span>
-                    <span
-                      className="nk-mono ml-auto inline-flex items-center gap-1.5"
-                      style={{
-                        color: "var(--accent)", fontWeight: 600, fontSize: "0.8rem",
-                        background: "var(--accent-soft)", border: "1px solid rgba(139,111,255,0.3)",
-                        padding: "4px 11px", borderRadius: "20px",
-                      }}
-                    >
-                      <Calendar size={13} aria-hidden="true" style={{ flexShrink: 0 }} /> {job.period}
-                    </span>
-                  </div>
-                  <ul className="space-y-1 mb-3">
-                    {job.bullets.map((b, j) => (
-                      <li key={j} className="text-sm flex gap-2" style={{ color: "var(--text-dim)", lineHeight: 1.55, maxWidth: "70ch" }}>
-                        <span aria-hidden="true" style={{ color: "var(--accent)", flexShrink: 0, fontSize: "0.6rem", lineHeight: 1.9 }}>&#9679;</span>
-                        <span>{highlightMetrics(b)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="flex flex-wrap gap-1.5">
-                    {job.tags.map((t) => <TechTag key={t} label={t} className="nk-tag-compact" />)}
-                  </div>
-                </div>
-              </Reveal>
-            ))}
           </div>
         </div>
       </section>
