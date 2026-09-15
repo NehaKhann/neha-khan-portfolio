@@ -541,6 +541,7 @@ export default function Portfolio() {
               className="nk-fade-in"
               style={{
                 display: "inline-block", animationDelay: "480ms",
+                lineHeight: 1.3, paddingBottom: "0.12em", marginBottom: "-0.12em",
                 backgroundImage: "linear-gradient(90deg, var(--accent), var(--teal))",
                 WebkitBackgroundClip: "text", backgroundClip: "text",
                 color: "transparent", WebkitTextFillColor: "transparent",
@@ -551,8 +552,10 @@ export default function Portfolio() {
           </h1>
           <div className="nk-fade-in mt-8 max-w-2xl" style={{ animationDelay: "230ms" }}>
             <p style={{ margin: 0, color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
-              {yearsExp}+ years of backend and frontend expertise — Core Java and modern Java frameworks,
-              the MERN stack, and <span style={{ color: "var(--teal)", fontWeight: 600 }}>Python</span>.
+              {yearsExp}+ years of backend and frontend expertise — <span style={{ color: "var(--accent)", opacity: 0.82 }}>Core Java</span> and{" "}
+              <span style={{ color: "var(--accent)", opacity: 0.82 }}>modern Java frameworks</span>, the{" "}
+              <span style={{ color: "var(--accent)", opacity: 0.82 }}>MERN stack</span>, and{" "}
+              <span style={{ color: "var(--teal)", fontWeight: 600 }}>Python</span>.
             </p>
             <p style={{ margin: "0.85rem 0 0", color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
               Currently deep in an AI learning journey covering <span style={{ color: "var(--teal)", fontWeight: 600 }}>LLM engineering</span> and{" "}
