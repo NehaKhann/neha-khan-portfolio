@@ -51,7 +51,16 @@ const styles = `
   .nk-mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   .nk-sans { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-feature-settings: "cv11", "ss01"; }
   h1, h2, h3 { text-wrap: balance; }
-  .nk-root { background: var(--bg); color: var(--text); transition: background 0.3s ease, color 0.3s ease; }
+  .nk-root { position: relative; z-index: 0; background: var(--bg); color: var(--text); transition: background 0.3s ease, color 0.3s ease; }
+  .nk-bg-texture {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(var(--text-faint) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.05;
+  }
   .nk-glass {
     background: var(--bg-elev);
     border: 1px solid var(--border);
@@ -443,6 +452,7 @@ export default function Portfolio() {
   return (
     <div className="nk-root nk-sans" style={{ minHeight: "100vh", ...themes[theme] }}>
       <style>{styles}</style>
+      <div className="nk-bg-texture" aria-hidden="true" />
 
       <a
         href="#main-content"
