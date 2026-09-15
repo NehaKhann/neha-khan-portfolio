@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon, Network, ShieldCheck, GraduationCap, Calendar, Download, Bug, Wand2 } from "lucide-react";
+import { Mail, Github, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon, Network, ShieldCheck, GraduationCap, Calendar, Download, Bug, Wand2 } from "lucide-react";
 import { profile, getYearsOfExperience, getHeroStats, experience, projects, certifications, education, articles, skillGroups } from "./data.js";
 import { TechTag, categoryMeta, languageColors } from "./techIcons.jsx";
-import { SiMedium } from "react-icons/si";
+import { SiMedium, SiGithub } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa";
 
 const projectIcons = {
   "MCP Trust Registry": Network,
@@ -171,12 +172,16 @@ const styles = `
     box-shadow: 0 16px 40px rgba(0,0,0,0.35);
   }
   .nk-social-icon {
-    transition: transform 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
   }
   .nk-social-icon:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     border-color: var(--accent);
     color: var(--accent);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.22);
   }
   .nk-live-link svg {
     transition: transform 0.15s ease;
@@ -221,7 +226,7 @@ const styles = `
   }
   @media (prefers-reduced-motion: reduce) {
     .nk-reveal { opacity: 1; transform: none; transition: none; }
-    .nk-card:hover, .nk-btn-primary:hover { transform: none; }
+    .nk-card:hover, .nk-btn-primary:hover, .nk-social-icon:hover { transform: none; }
     .nk-fade-in { animation: none; opacity: 1; }
     .nk-mesh-blob { animation: none !important; }
   }
@@ -253,6 +258,55 @@ function Reveal({ children, className = "", delay = 0 }) {
   return (
     <div ref={ref} className={`nk-reveal ${inView ? "in" : ""} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
       {children}
+    </div>
+  );
+}
+
+// Animates "3+" / "11+" style stat strings from 0 up to their numeric value,
+// appending the suffix only once the count finishes. `trigger` comes from an
+// IntersectionObserver on the parent block, so all three stats start together.
+function CountUpStat({ value, label, trigger }) {
+  const match = value.match(/^(\d+)(.*)$/);
+  const target = match ? parseInt(match[1], 10) : 0;
+  const suffix = match ? match[2] : "";
+  const [display, setDisplay] = useState(0);
+  const [done, setDone] = useState(false);
+  const startedRef = useRef(false);
+
+  useEffect(() => {
+    if (!trigger || startedRef.current) return;
+    startedRef.current = true;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplay(target);
+      setDone(true);
+      return;
+    }
+
+    const duration = 1100;
+    const startTime = performance.now();
+    let raf;
+    const tick = (now) => {
+      const t = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      if (t < 1) {
+        setDisplay(Math.round(eased * target));
+        raf = requestAnimationFrame(tick);
+      } else {
+        setDisplay(target);
+        setDone(true);
+      }
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [trigger, target]);
+
+  return (
+    <div>
+      <div className="nk-mono" style={{ fontSize: "1.7rem", color: "var(--text)", fontWeight: 600 }}>
+        {display}{done ? suffix : ""}
+      </div>
+      <div className="text-xs mt-1" style={{ color: "var(--text-faint)" }}>{label}</div>
     </div>
   );
 }
@@ -295,10 +349,9 @@ function SocialIconLink({ href, label, children }) {
       target="_blank"
       rel="noreferrer"
       aria-label={label}
-      className="nk-link nk-social-icon"
+      className="nk-link nk-glass nk-social-icon"
       style={{
         width: "34px", height: "34px", borderRadius: "50%",
-        border: "1px solid var(--border)", background: "var(--bg-elev)",
         display: "flex", alignItems: "center", justifyContent: "center",
       }}
     >
@@ -361,6 +414,7 @@ export default function Portfolio() {
   const [theme, setTheme] = useState(getInitialTheme);
   const [activeSection, setActiveSection] = useState("about");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [statsRef, statsInView] = useReveal();
   useEffect(() => { document.body.style.margin = "0"; }, []);
   useEffect(() => { window.localStorage.setItem("nk-theme", theme); }, [theme]);
 
@@ -468,10 +522,10 @@ export default function Portfolio() {
             </div>
             <div className="flex items-center gap-2.5">
               <SocialIconLink href={profile.linkedin} label="LinkedIn">
-                <Linkedin size={15} aria-hidden="true" />
+                <FaLinkedin size={14} aria-hidden="true" />
               </SocialIconLink>
               <SocialIconLink href={profile.github} label="GitHub">
-                <Github size={15} aria-hidden="true" />
+                <SiGithub size={13} aria-hidden="true" />
               </SocialIconLink>
               <SocialIconLink href={profile.medium} label="Medium">
                 <SiMedium size={13} aria-hidden="true" />
@@ -513,12 +567,9 @@ export default function Portfolio() {
             <MapPin size={14} /> Karachi, Pakistan
           </span>
 
-          <div className="nk-fade-in mt-16 grid grid-cols-3 max-w-md gap-4 sm:gap-8" style={{ animationDelay: "370ms" }}>
+          <div ref={statsRef} className="nk-fade-in mt-16 grid grid-cols-3 max-w-md gap-4 sm:gap-8" style={{ animationDelay: "370ms" }}>
             {heroStats.map(([num, label]) => (
-              <div key={label}>
-                <div className="nk-mono" style={{ fontSize: "1.7rem", color: "var(--text)", fontWeight: 600 }}>{num}</div>
-                <div className="text-xs mt-1" style={{ color: "var(--text-faint)" }}>{label}</div>
-              </div>
+              <CountUpStat key={label} value={num} label={label} trigger={statsInView} />
             ))}
           </div>
         </div>
@@ -853,10 +904,10 @@ export default function Portfolio() {
             </div>
             <div className="flex flex-wrap justify-center items-center gap-3 mt-8">
               <SocialIconLink href={profile.linkedin} label="LinkedIn">
-                <Linkedin size={15} aria-hidden="true" />
+                <FaLinkedin size={14} aria-hidden="true" />
               </SocialIconLink>
               <SocialIconLink href={profile.github} label="GitHub">
-                <Github size={15} aria-hidden="true" />
+                <SiGithub size={13} aria-hidden="true" />
               </SocialIconLink>
               <SocialIconLink href={profile.medium} label="Medium">
                 <SiMedium size={13} aria-hidden="true" />
