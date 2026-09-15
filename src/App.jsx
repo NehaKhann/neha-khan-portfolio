@@ -481,10 +481,21 @@ export default function Portfolio() {
           <div className="nk-fade-in inline-flex items-center gap-2 nk-mono text-xs mb-7" style={{ animationDelay: "80ms", color: "var(--teal)", border: "1px solid rgba(52,214,196,0.3)", background: "var(--teal-soft)", padding: "6px 14px", borderRadius: "20px" }}>
             <span className="nk-dot" /> Open to full-stack &amp; AI engineering roles
           </div>
-          <h1 className="nk-fade-in nk-sans" style={{ animationDelay: "150ms", fontSize: "clamp(2.4rem, 5.2vw, 4.1rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: "min(18ch, 640px)", color: "var(--text)" }}>
-            Software Engineer.<br />Now expanding into AI Engineering.
+          <h1 className="nk-fade-in nk-sans" style={{ animationDelay: "150ms", fontSize: "clamp(2.4rem, 5.2vw, 4.1rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.05, maxWidth: "min(18ch, 640px)", color: "var(--text)" }}>
+            Software Engineer.<br />Now expanding into{" "}
+            <span
+              className="nk-fade-in"
+              style={{
+                display: "inline-block", animationDelay: "480ms",
+                backgroundImage: "linear-gradient(90deg, var(--accent), var(--teal))",
+                WebkitBackgroundClip: "text", backgroundClip: "text",
+                color: "transparent", WebkitTextFillColor: "transparent",
+              }}
+            >
+              AI Engineering
+            </span>.
           </h1>
-          <p className="nk-fade-in mt-7 max-w-lg" style={{ animationDelay: "230ms", color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
+          <p className="nk-fade-in mt-8 max-w-lg" style={{ animationDelay: "230ms", color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
             {yearsExp}+ years of backend and frontend expertise — Core Java and modern Java frameworks,
             the MERN stack, and Python. Currently deep in an AI learning journey covering LLM engineering
             and AI security, bringing that same engineering rigor to how I build AI systems.
