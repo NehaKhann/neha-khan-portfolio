@@ -57,9 +57,43 @@ const styles = `
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.14;
+  }
+  .nk-star {
+    position: absolute;
+    inset: 0;
     background-repeat: repeat;
   }
+  .nk-star-1 {
+    background-image: radial-gradient(var(--text-faint) 1px, transparent 1px);
+    background-size: 340px 380px;
+    animation: nkTwinkle1 17s ease-in-out infinite;
+    animation-delay: -3s;
+  }
+  .nk-star-2 {
+    background-image: radial-gradient(var(--text-faint) 1px, transparent 1px);
+    background-size: 460px 420px;
+    background-position: 140px 60px;
+    animation: nkTwinkle2 22s ease-in-out infinite;
+    animation-delay: -9s;
+  }
+  .nk-star-3 {
+    background-image: radial-gradient(var(--text-faint) 0.8px, transparent 0.8px);
+    background-size: 300px 500px;
+    background-position: 60px 260px;
+    animation: nkTwinkle3 14s ease-in-out infinite;
+    animation-delay: -6s;
+  }
+  .nk-star-4 {
+    background-image: radial-gradient(var(--text-faint) 1.2px, transparent 1.2px);
+    background-size: 520px 340px;
+    background-position: 300px 140px;
+    animation: nkTwinkle4 20s ease-in-out infinite;
+    animation-delay: -13s;
+  }
+  @keyframes nkTwinkle1 { 0%, 100% { opacity: 0.008; } 50% { opacity: 0.026; } }
+  @keyframes nkTwinkle2 { 0%, 100% { opacity: 0.006; } 50% { opacity: 0.022; } }
+  @keyframes nkTwinkle3 { 0%, 100% { opacity: 0.01; } 50% { opacity: 0.028; } }
+  @keyframes nkTwinkle4 { 0%, 100% { opacity: 0.007; } 50% { opacity: 0.024; } }
   .nk-glass {
     background: var(--bg-elev);
     border: 1px solid var(--border);
@@ -237,6 +271,7 @@ const styles = `
     .nk-card:hover, .nk-btn-primary:hover, .nk-social-icon:hover { transform: none; }
     .nk-fade-in { animation: none; opacity: 1; }
     .nk-mesh-blob { animation: none !important; }
+    .nk-star { animation: none !important; opacity: 0.015; }
   }
   a:focus-visible, button:focus-visible {
     outline: 2px solid var(--accent);
@@ -410,30 +445,6 @@ function highlightMetrics(text) {
   );
 }
 
-// Sparse, static node/line pattern tiled as the page's fixed background
-// texture, colored per theme (data-URI SVG, since CSS vars don't resolve
-// inside an external image resource).
-function getNodeTextureUrl(color) {
-  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'>
-<g fill='none' stroke='${color}' stroke-width='1'>
-<line x1='24' y1='36' x2='100' y2='120'/>
-<line x1='100' y1='120' x2='168' y2='56'/>
-<line x1='168' y1='56' x2='122' y2='18'/>
-<line x1='100' y1='120' x2='46' y2='188'/>
-<line x1='100' y1='120' x2='188' y2='166'/>
-</g>
-<g fill='${color}'>
-<circle cx='24' cy='36' r='2.2'/>
-<circle cx='168' cy='56' r='2.6'/>
-<circle cx='100' cy='120' r='2.4'/>
-<circle cx='188' cy='166' r='2.2'/>
-<circle cx='46' cy='188' r='2'/>
-<circle cx='122' cy='18' r='2'/>
-</g>
-</svg>`;
-  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
-}
-
 function getInitialTheme() {
   if (typeof window === "undefined") return "dark";
   const saved = window.localStorage.getItem("nk-theme");
@@ -475,11 +486,12 @@ export default function Portfolio() {
   return (
     <div className="nk-root nk-sans" style={{ minHeight: "100vh", ...themes[theme] }}>
       <style>{styles}</style>
-      <div
-        className="nk-bg-texture"
-        aria-hidden="true"
-        style={{ backgroundImage: getNodeTextureUrl(themes[theme]["--text-faint"]), backgroundSize: "220px 220px" }}
-      />
+      <div className="nk-bg-texture" aria-hidden="true">
+        <div className="nk-star nk-star-1" />
+        <div className="nk-star nk-star-2" />
+        <div className="nk-star nk-star-3" />
+        <div className="nk-star nk-star-4" />
+      </div>
 
       <a
         href="#main-content"
