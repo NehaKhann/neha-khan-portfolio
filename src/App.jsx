@@ -207,10 +207,23 @@ const styles = `
     display: inline-block;
     box-shadow: 0 0 8px var(--teal);
   }
+  @keyframes nkMeshFloat1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(6%, 8%) scale(1.15); }
+  }
+  @keyframes nkMeshFloat2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-9%, 5%) scale(0.9); }
+  }
+  @keyframes nkMeshFloat3 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(5%, -7%) scale(1.1); }
+  }
   @media (prefers-reduced-motion: reduce) {
     .nk-reveal { opacity: 1; transform: none; transition: none; }
     .nk-card:hover, .nk-btn-primary:hover { transform: none; }
     .nk-fade-in { animation: none; opacity: 1; }
+    .nk-mesh-blob { animation: none !important; }
   }
   a:focus-visible, button:focus-visible {
     outline: 2px solid var(--accent);
@@ -333,14 +346,13 @@ function NetworkGraphic({ className = "" }) {
   ];
 
   return (
-    <svg viewBox="0 0 460 460" className={className} style={{ width: "100%", height: "100%" }} aria-hidden="true">
+    <svg viewBox="0 0 460 460" className={className} style={{ width: "100%", height: "100%", overflow: "visible" }} aria-hidden="true">
       <defs>
-        <filter id="nkGlow" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="5" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
+        <filter id="nkGlowTeal" x="-150%" y="-150%" width="400%" height="400%">
+          <feDropShadow dx="0" dy="0" stdDeviation="7" floodColor="var(--teal)" floodOpacity="0.85" />
+        </filter>
+        <filter id="nkGlowAccent" x="-150%" y="-150%" width="400%" height="400%">
+          <feDropShadow dx="0" dy="0" stdDeviation="7" floodColor="var(--accent)" floodOpacity="0.85" />
         </filter>
       </defs>
       {links.map(([lx1, ly1, lx2, ly2], i) => (
@@ -358,12 +370,24 @@ function NetworkGraphic({ className = "" }) {
       {layer2.map((y, i) => (
         <circle key={`n2-${i}`} cx={x2} cy={y} r={i === 1 ? 8 : 6}
           fill={i === 1 ? "var(--teal)" : "var(--text-faint)"}
-          filter={i === 1 ? "url(#nkGlow)" : undefined} />
+          filter={i === 1 ? "url(#nkGlowTeal)" : undefined} />
       ))}
       {layer3.map((y, i) => (
-        <circle key={`n3-${i}`} cx={x3} cy={y} r="8" fill="var(--accent)" filter="url(#nkGlow)" />
+        <circle key={`n3-${i}`} cx={x3} cy={y} r="8" fill="var(--accent)" filter="url(#nkGlowAccent)" />
       ))}
     </svg>
+  );
+}
+
+// Option 2 hero background — ambient blurred color shapes instead of a
+// literal diagram. Colors ride the theme variables so they adapt automatically.
+function GradientMesh({ className = "" }) {
+  return (
+    <div className={className} style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }} aria-hidden="true">
+      <div className="nk-mesh-blob" style={{ position: "absolute", top: "-12%", right: "-8%", width: "58%", height: "72%", borderRadius: "50%", background: "var(--accent)", opacity: 0.32, filter: "blur(70px)", animation: "nkMeshFloat1 18s ease-in-out infinite" }} />
+      <div className="nk-mesh-blob" style={{ position: "absolute", top: "22%", right: "18%", width: "42%", height: "56%", borderRadius: "50%", background: "var(--teal)", opacity: 0.26, filter: "blur(80px)", animation: "nkMeshFloat2 22s ease-in-out infinite" }} />
+      <div className="nk-mesh-blob" style={{ position: "absolute", top: "2%", right: "34%", width: "34%", height: "44%", borderRadius: "50%", background: "var(--accent)", opacity: 0.2, filter: "blur(90px)", animation: "nkMeshFloat3 16s ease-in-out infinite" }} />
+    </div>
   );
 }
 
@@ -384,13 +408,27 @@ function getInitialTheme() {
   return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
 }
 
+// Temporary — hero background A/B toggle, driven by ?hero=network|mesh so
+// each option is directly linkable. Remove once one variant is chosen.
+function getInitialHeroVariant() {
+  if (typeof window === "undefined") return "network";
+  const param = new URLSearchParams(window.location.search).get("hero");
+  return param === "mesh" ? "mesh" : "network";
+}
+
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
   const [activeSection, setActiveSection] = useState("about");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [heroVariant, setHeroVariant] = useState(getInitialHeroVariant);
   useEffect(() => { document.body.style.margin = "0"; }, []);
   useEffect(() => { window.localStorage.setItem("nk-theme", theme); }, [theme]);
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("hero", heroVariant);
+    window.history.replaceState({}, "", url);
+  }, [heroVariant]);
 
   const sections = [["#about", "About"], ["#experience", "Experience"], ["#projects", "Projects"], ["#skills", "Skills"], ["#contact", "Contact"]];
 
@@ -488,8 +526,30 @@ export default function Portfolio() {
       {/* HERO */}
       <section className="nk-glow-violet" style={{ position: "relative", overflow: "hidden" }}>
         <div className="max-w-6xl mx-auto px-6 pt-24 pb-28 md:pt-32 md:pb-36" style={{ position: "relative" }}>
-          <div style={{ position: "absolute", top: "-6%", right: "-2%", opacity: 0.9, pointerEvents: "none" }} className="hidden lg:block w-[38%] h-[95%] xl:w-[48%] xl:h-[106%] 2xl:w-[54%] 2xl:h-[112%]">
-            <NetworkGraphic />
+          {heroVariant === "network" ? (
+            <div style={{ position: "absolute", top: "6%", right: "3%", opacity: 0.9, pointerEvents: "none" }} className="hidden lg:block w-[34%] h-[80%] xl:w-[40%] xl:h-[88%] 2xl:w-[46%] 2xl:h-[92%]">
+              <NetworkGraphic />
+            </div>
+          ) : (
+            <GradientMesh className="hidden lg:block" />
+          )}
+          {/* Temporary A/B toggle for comparing hero backgrounds — remove once one is chosen */}
+          <div className="hidden lg:flex" style={{ position: "absolute", top: "12px", right: "12px", zIndex: 5, gap: "6px" }}>
+            {["network", "mesh"].map((variant) => (
+              <button
+                key={variant}
+                onClick={() => setHeroVariant(variant)}
+                className="nk-mono"
+                style={{
+                  fontSize: "0.65rem", padding: "4px 10px", borderRadius: "12px", cursor: "pointer",
+                  border: `1px solid ${heroVariant === variant ? "var(--accent)" : "var(--border)"}`,
+                  background: heroVariant === variant ? "var(--accent-soft)" : "var(--bg-elev)",
+                  color: heroVariant === variant ? "var(--accent)" : "var(--text-faint)",
+                }}
+              >
+                {variant === "network" ? "Network" : "Mesh"}
+              </button>
+            ))}
           </div>
           <div className="nk-fade-in flex flex-wrap items-center justify-between gap-4 mb-8">
             <div className="flex items-center gap-3">
