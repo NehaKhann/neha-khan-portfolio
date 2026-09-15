@@ -57,9 +57,8 @@ const styles = `
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-image: radial-gradient(var(--text-faint) 1px, transparent 1px);
-    background-size: 28px 28px;
     opacity: 0.05;
+    background-repeat: repeat;
   }
   .nk-glass {
     background: var(--bg-elev);
@@ -411,6 +410,30 @@ function highlightMetrics(text) {
   );
 }
 
+// Sparse, static node/line pattern tiled as the page's fixed background
+// texture, colored per theme (data-URI SVG, since CSS vars don't resolve
+// inside an external image resource).
+function getNodeTextureUrl(color) {
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'>
+<g fill='none' stroke='${color}' stroke-width='1'>
+<line x1='24' y1='36' x2='100' y2='120'/>
+<line x1='100' y1='120' x2='168' y2='56'/>
+<line x1='168' y1='56' x2='122' y2='18'/>
+<line x1='100' y1='120' x2='46' y2='188'/>
+<line x1='100' y1='120' x2='188' y2='166'/>
+</g>
+<g fill='${color}'>
+<circle cx='24' cy='36' r='2.2'/>
+<circle cx='168' cy='56' r='2.6'/>
+<circle cx='100' cy='120' r='2.4'/>
+<circle cx='188' cy='166' r='2.2'/>
+<circle cx='46' cy='188' r='2'/>
+<circle cx='122' cy='18' r='2'/>
+</g>
+</svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+
 function getInitialTheme() {
   if (typeof window === "undefined") return "dark";
   const saved = window.localStorage.getItem("nk-theme");
@@ -452,7 +475,11 @@ export default function Portfolio() {
   return (
     <div className="nk-root nk-sans" style={{ minHeight: "100vh", ...themes[theme] }}>
       <style>{styles}</style>
-      <div className="nk-bg-texture" aria-hidden="true" />
+      <div
+        className="nk-bg-texture"
+        aria-hidden="true"
+        style={{ backgroundImage: getNodeTextureUrl(themes[theme]["--text-faint"]), backgroundSize: "220px 220px" }}
+      />
 
       <a
         href="#main-content"
