@@ -562,9 +562,8 @@ export default function Portfolio() {
           </h1>
           <div className="nk-fade-in mt-8 max-w-2xl" style={{ animationDelay: "230ms" }}>
             <p style={{ margin: 0, color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
-              {yearsExp}+ years of backend and frontend expertise — <span style={{ color: "var(--accent)", opacity: 0.82 }}>Core Java</span> and{" "}
-              <span style={{ color: "var(--accent)", opacity: 0.82 }}>modern Java frameworks</span>, the{" "}
-              <span style={{ color: "var(--accent)", opacity: 0.82 }}>MERN stack</span>, and{" "}
+              {yearsExp}+ years of backend and frontend expertise — <span style={{ color: "var(--accent)", opacity: 0.82 }}>Core Java and modern Java frameworks</span>,{" "}
+              <span style={{ color: "var(--accent)", opacity: 0.82 }}>JavaScript frameworks and libraries</span>, and{" "}
               <span style={{ color: "var(--teal)", fontWeight: 600 }}>Python</span>.
             </p>
             <p style={{ margin: "0.85rem 0 0", color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
