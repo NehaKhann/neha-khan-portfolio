@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Mail, Github, Linkedin, ArrowUpRight, MapPin, Menu, X, Sparkles, Sun, Moon, Network, ShieldCheck, GraduationCap, Calendar, Download, Bug, Wand2 } from "lucide-react";
 import { profile, getYearsOfExperience, getHeroStats, experience, projects, certifications, education, articles, skillGroups } from "./data.js";
-import { TechTag, categoryMeta } from "./techIcons.jsx";
+import { TechTag, categoryMeta, languageColors } from "./techIcons.jsx";
 import { SiMedium } from "react-icons/si";
 
 const projectIcons = {
@@ -291,6 +291,26 @@ function SocialIconLink({ href, label, children }) {
     >
       {children}
     </a>
+  );
+}
+
+function LanguageBar({ languages }) {
+  return (
+    <div className="mb-5">
+      <div style={{ display: "flex", height: "6px", borderRadius: "4px", overflow: "hidden", background: "var(--border)" }}>
+        {languages.map((l) => (
+          <div key={l.name} style={{ width: `${l.pct}%`, background: languageColors[l.name] || "var(--text-faint)" }} />
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
+        {languages.map((l) => (
+          <span key={l.name} className="nk-mono inline-flex items-center gap-1.5" style={{ fontSize: "0.68rem", color: "var(--text-faint)" }}>
+            <span aria-hidden="true" style={{ width: "7px", height: "7px", borderRadius: "50%", background: languageColors[l.name] || "var(--text-faint)", flexShrink: 0 }} />
+            {l.name} {l.pct}%
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -653,6 +673,7 @@ export default function Portfolio() {
                     <div style={{ padding: p.size === "lg" ? "2rem" : "1.75rem" }}>
                       <h3 style={{ fontSize: p.size === "lg" ? "1.5rem" : "1.15rem", fontWeight: 700, color: "var(--text)", marginBottom: "0.65rem" }}>{p.name}</h3>
                       <p className="text-sm mb-5" style={{ color: "var(--text-dim)", lineHeight: 1.65, maxWidth: p.size === "lg" ? "60ch" : "none" }}>{p.tagline}</p>
+                      {p.languages && <LanguageBar languages={p.languages} />}
                       <div className="flex flex-wrap gap-2 mb-6">
                         {p.tags.map((t) => <TechTag key={t} label={t} />)}
                       </div>

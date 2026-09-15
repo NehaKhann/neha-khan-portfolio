@@ -70,25 +70,51 @@ export const experience = [
 export const projects = [
   { name: "MCP Trust Registry", size: "lg", category: "AI Security", featured: true,
     tagline: "A live registry that scans and scores MCP tools for trustworthiness. Built solo, deployed for $0/month — and it once caught a real incident.",
-    tags: ["MCP", "Tool Poisoning", "AI Security", "FastAPI"], github: "https://github.com/NehaKhann/mcp-trust-registry", live: "https://mcp-trust-registry.vercel.app",
+    tags: ["AI Security", "Docker Sandbox", "FastAPI", "LLM Security", "MCP", "Model Context Protocol", "Next.js", "Portfolio Project", "PostgreSQL", "Tool Poisoning", "TypeScript"],
+    languages: [
+      { name: "TypeScript", pct: 52.2 }, { name: "Python", pct: 43.3 }, { name: "CSS", pct: 2.2 },
+      { name: "Dockerfile", pct: 1.8 }, { name: "JavaScript", pct: 0.5 },
+    ],
+    github: "https://github.com/NehaKhann/mcp-trust-registry", live: "https://mcp-trust-registry.vercel.app",
     screenshot: "/project-mcp-trust-registry.jpg" },
   { name: "SpringGuard", size: "sm", category: "AI Security",
     tagline: "Spring Boot code auditor — 21 security rules plus an AI review pass, grading Java code A–F with AI-proposed fixes.",
-    tags: ["Spring Boot", "Java", "AI Security"], github: "https://github.com/NehaKhann/springguard-backend", live: "https://springguard-frontend.vercel.app",
+    tags: ["AI", "Java", "React", "Security", "Spring Boot", "Static Analysis", "TypeScript", "Vulnerability Scanner"],
+    languages: [
+      { name: "Java", pct: 45.9 }, { name: "TypeScript", pct: 33.2 }, { name: "CSS", pct: 18.9 },
+      { name: "HTML", pct: 1.8 }, { name: "Dockerfile", pct: 0.2 },
+    ],
+    github: "https://github.com/NehaKhann/springguard-backend", live: "https://springguard-frontend.vercel.app",
     screenshot: "/project-springguard.jpg" },
   { name: "AI Engineering Journey", size: "md", category: "AI/ML",
     tagline: "A self-directed curriculum — LLM foundations, fine-tuning, LoRA/QLoRA/DoRA, quantization — with RAG and RLHF next. Documented weekly with published write-ups.",
-    tags: ["Fine-tuning", "LoRA / QLoRA", "Hugging Face", "PyTorch"], github: "https://github.com/NehaKhann/ai-engineering-journey", live: null, screenshot: null },
+    tags: ["AI", "AI Engineering", "Deep Learning", "Fine-tuning", "Generative AI", "Hugging Face", "LLM", "LoRA", "Machine Learning", "Prompt Engineering", "Python", "PyTorch", "QLoRA", "Quantization", "RLHF", "Transformers"],
+    languages: [
+      { name: "Jupyter Notebook", pct: 88.5 }, { name: "Python", pct: 11.5 },
+    ],
+    github: "https://github.com/NehaKhann/ai-engineering-journey", live: null, screenshot: null },
   { name: "SME Cash-Flow Explainer", size: "sm", category: "Full-Stack",
     tagline: "Turns raw bank CSVs into audit-ready risk memos — every underwriting metric computed deterministically, with an LLM layer that explains but never invents the numbers.",
-    tags: ["FastAPI", "React", "PostgreSQL", "Risk Analysis"], github: "https://github.com/NehaKhann/sme-cashflow-explainer", live: "https://cashflow-pi-liard.vercel.app",
+    tags: ["Cashflow Underwriting", "Docker Compose", "FastAPI", "Financial Analysis", "Fintech", "LLM", "PostgreSQL", "Python", "QLoRA", "React", "Risk Analysis", "Small Business Lending", "TypeScript"],
+    languages: [
+      { name: "Python", pct: 43.6 }, { name: "TypeScript", pct: 35.2 }, { name: "CSS", pct: 20.6 }, { name: "Other", pct: 0.6 },
+    ],
+    github: "https://github.com/NehaKhann/sme-cashflow-explainer", live: "https://cashflow-pi-liard.vercel.app",
     screenshot: "/project-sme-cashflow.jpg" },
   { name: "AI Security — Garak", size: "sm", category: "AI Security",
     tagline: "A hands-on guide to NVIDIA Garak for LLM security scanning — vulnerability assessment against models served through Hugging Face, Spring Boot, and Ollama.",
-    tags: ["LLM Security", "Vulnerability Assessment", "AI Security"], github: "https://github.com/NehaKhann/ai-security-garak", live: null, screenshot: null },
+    tags: ["AI", "AI Security Training", "LLM Evaluation", "LLM Security", "Security Scanner", "Vulnerability Assessment"],
+    languages: [
+      { name: "HTML", pct: 99.9 }, { name: "Other", pct: 0.1 },
+    ],
+    github: "https://github.com/NehaKhann/ai-security-garak", live: null, screenshot: null },
   { name: "AI Security — Gandalf", size: "sm", category: "AI Security",
     tagline: "Prompt injection, hands-on: breaking Lakera's Gandalf game, then building a Spring Boot chatbot with escalating defenses — system prompts, input filters, output filters.",
-    tags: ["Prompt Injection", "Red Teaming", "Spring Boot"], github: "https://github.com/NehaKhann/ai-security-gandalf", live: null, screenshot: null },
+    tags: ["AI Security", "Chatbot", "GenAI Security", "Java", "LLM Security", "Ollama", "Prompt Injection", "Red Teaming", "Spring Boot"],
+    languages: [
+      { name: "HTML", pct: 66.8 }, { name: "Java", pct: 33.2 },
+    ],
+    github: "https://github.com/NehaKhann/ai-security-gandalf", live: null, screenshot: null },
 ];
 
 export const certifications = [
