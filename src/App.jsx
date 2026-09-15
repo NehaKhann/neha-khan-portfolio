@@ -677,15 +677,15 @@ export default function Portfolio() {
                 <div style={{ position: "relative" }}>
                   <div style={{ position: "absolute", left: "-30px", top: "5px", width: "12px", height: "12px", borderRadius: "50%", background: "var(--teal)", boxShadow: "0 0 0 4px var(--teal-soft)" }} />
                   <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)" }}>AI Engineer <span className="nk-mono" style={{ fontSize: "0.7rem", fontWeight: 500, color: "var(--teal)" }}>(self-directed)</span></h3>
-                  <p className="nk-mono text-xs mt-0.5 mb-2" style={{ color: "var(--text-faint)" }}>Mid-2025 — Present, overlapping</p>
+                  <p className="nk-mono text-xs mt-0.5 mb-2" style={{ color: "var(--text-faint)" }}>Mid-2025 — Present</p>
                   <p className="text-sm" style={{ color: "var(--text-dim)", lineHeight: 1.6 }}>
-                    Started alongside full-time engineering work, now the primary focus — LLM fine-tuning, AI security, and Python — retrieval-augmented generation on deck — {articles.length}+ articles published, {projects.length} projects shipped.
+                    Started alongside full-time work in mid-2025; became the primary focus after leaving SIBISOFT in Nov 2025 — LLM fine-tuning, AI security, and Python — retrieval-augmented generation on deck — {articles.length}+ articles published, {projects.length} projects shipped.
                   </p>
                 </div>
               </div>
               <div style={{ marginTop: "1.75rem", paddingTop: "1.25rem", borderTop: "1px solid var(--border)" }}>
                 <p className="text-sm" style={{ color: "var(--text-faint)", lineHeight: 1.6 }}>
-                  {yearsExp}+ years of engineering discipline, now applied to how I build and ship AI systems.
+                  {yearsExp}+ years of professional engineering experience, plus a year of self-directed AI learning — now applied to how I build and ship AI systems.
                 </p>
               </div>
             </div>

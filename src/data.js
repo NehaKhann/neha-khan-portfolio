@@ -10,11 +10,14 @@ export const profile = {
   medium: "https://medium.com/@n.nehakhan333",
 };
 
-// Career start date used to compute "years of experience" dynamically,
-// so the number stays accurate without ever needing a manual update.
+// Paid professional employment ran Feb 2022 (Bytecorp) through Nov 2025
+// (SIBISOFT) — a fixed window, not ongoing. Years of experience is computed
+// from these two fixed dates rather than today's date, so the figure stays
+// "3+" rather than climbing every year post-employment.
 export const careerStart = new Date(2022, 1, 1); // Feb 2022 — Bytecorp
+export const careerEnd = new Date(2025, 10, 1); // Nov 2025 — end of SIBISOFT
 
-export function getYearsOfExperience(from = careerStart, to = new Date()) {
+export function getYearsOfExperience(from = careerStart, to = careerEnd) {
   let years = to.getFullYear() - from.getFullYear();
   const monthDiff = to.getMonth() - from.getMonth();
   if (monthDiff < 0 || (monthDiff === 0 && to.getDate() < from.getDate())) years--;
