@@ -77,7 +77,7 @@ export const projects = [
     tags: ["Spring Boot", "Java", "AI Security"], github: "https://github.com/NehaKhann/springguard-backend", live: "https://springguard-frontend.vercel.app",
     screenshot: "/project-springguard.jpg" },
   { name: "AI Engineering Journey", size: "md", category: "AI/ML",
-    tagline: "A self-directed curriculum — LLM foundations, fine-tuning, LoRA/QLoRA, RAG — documented weekly with published write-ups.",
+    tagline: "A self-directed curriculum — LLM foundations, fine-tuning, LoRA/QLoRA/DoRA, quantization — with RAG and RLHF next. Documented weekly with published write-ups.",
     tags: ["Fine-tuning", "LoRA / QLoRA", "Hugging Face", "PyTorch"], github: "https://github.com/NehaKhann/ai-engineering-journey", live: null, screenshot: null },
   { name: "SME Cash-Flow Explainer", size: "sm", category: "Full-Stack",
     tagline: "Turns raw bank CSVs into audit-ready risk memos — every underwriting metric computed deterministically, with an LLM layer that explains but never invents the numbers.",

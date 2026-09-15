@@ -495,8 +495,8 @@ export default function Portfolio() {
             Software Engineer.<br />Now expanding into AI Engineering.
           </h1>
           <p className="nk-fade-in mt-7 max-w-lg" style={{ animationDelay: "230ms", color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
-            {yearsExp}+ years building production backend systems — now going deep on LLM fine-tuning,
-            RAG, and AI security to bring both worlds into one practice.
+            {yearsExp}+ years building production backend systems — now going deep on LLM fine-tuning
+            and AI security, RAG next, to bring both worlds into one practice.
           </p>
           <div className="nk-fade-in mt-9 flex flex-wrap items-center gap-4" style={{ animationDelay: "300ms" }}>
             <a href={`mailto:${profile.email}`} className="nk-btn-primary" style={{ padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem" }}>Get in touch</a>
@@ -536,7 +536,7 @@ export default function Portfolio() {
               <div className="mb-6">
                 <p className="nk-mono text-xs mb-2" style={{ color: "var(--teal)" }}>Now</p>
                 <p style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
-                  Going deep on AI engineering: LLM fundamentals, fine-tuning with LoRA/QLoRA, retrieval-augmented generation, and AI security testing.
+                  Going deep on AI engineering: LLM fundamentals, fine-tuning with LoRA/QLoRA, and AI security testing — retrieval-augmented generation is next on the curriculum.
                 </p>
               </div>
               <div className="mb-6">
@@ -570,7 +570,7 @@ export default function Portfolio() {
                   <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)" }}>AI Engineer <span className="nk-mono" style={{ fontSize: "0.7rem", fontWeight: 500, color: "var(--teal)" }}>(self-directed)</span></h3>
                   <p className="nk-mono text-xs mt-0.5 mb-2" style={{ color: "var(--text-faint)" }}>2025 — Present</p>
                   <p className="text-sm" style={{ color: "var(--text-dim)", lineHeight: 1.6 }}>
-                    Still deep in it — LLM fine-tuning, RAG, AI security — {articles.length}+ articles published, {projects.length} projects shipped.
+                    Still deep in it — LLM fine-tuning, AI security, RAG next — {articles.length}+ articles published, {projects.length} projects shipped.
                   </p>
                 </div>
               </div>
