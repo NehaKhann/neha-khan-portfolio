@@ -515,8 +515,9 @@ export default function Portfolio() {
             Software Engineer.<br />Now expanding into AI Engineering.
           </h1>
           <p className="nk-fade-in mt-7 max-w-lg" style={{ animationDelay: "230ms", color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
-            Shipping full-stack systems for {yearsExp}+ years — Java, Python, and JavaScript across the
-            stack. Currently going deep on LLM fine-tuning and AI security to bring both practices together.
+            {yearsExp}+ years of backend and frontend expertise — Core Java and modern Java frameworks,
+            the MERN stack, and Python. Currently deep in an AI learning journey covering LLM engineering
+            and AI security, bringing that same engineering rigor to how I build AI systems.
           </p>
           <div className="nk-fade-in mt-9 flex flex-wrap items-center gap-4" style={{ animationDelay: "300ms" }}>
             <a href={`mailto:${profile.email}`} className="nk-btn-primary" style={{ padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem" }}>Get in touch</a>
