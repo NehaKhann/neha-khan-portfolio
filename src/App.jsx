@@ -495,11 +495,16 @@ export default function Portfolio() {
               AI Engineering
             </span>.
           </h1>
-          <p className="nk-fade-in mt-8 max-w-lg" style={{ animationDelay: "230ms", color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
-            {yearsExp}+ years of backend and frontend expertise — Core Java and modern Java frameworks,
-            the MERN stack, and Python. Currently deep in an AI learning journey covering LLM engineering
-            and AI security, bringing that same engineering rigor to how I build AI systems.
-          </p>
+          <div className="nk-fade-in mt-8 max-w-2xl" style={{ animationDelay: "230ms" }}>
+            <p style={{ margin: 0, color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
+              {yearsExp}+ years of backend and frontend expertise — Core Java and modern Java frameworks,
+              the MERN stack, and <span style={{ color: "var(--teal)", fontWeight: 600 }}>Python</span>.
+            </p>
+            <p style={{ margin: "0.85rem 0 0", color: "var(--text-dim)", fontSize: "1.1rem", lineHeight: 1.65 }}>
+              Currently deep in an AI learning journey covering <span style={{ color: "var(--teal)", fontWeight: 600 }}>LLM engineering</span> and{" "}
+              <span style={{ color: "var(--teal)", fontWeight: 600 }}>AI security</span>, bringing that same engineering rigor to how I build AI systems.
+            </p>
+          </div>
           <div className="nk-fade-in mt-9 flex flex-wrap items-center gap-4" style={{ animationDelay: "300ms" }}>
             <a href={`mailto:${profile.email}`} className="nk-btn-primary" style={{ padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem" }}>Get in touch</a>
             <a href="#projects" className="nk-btn-secondary" style={{ padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem", textDecoration: "none" }}>See the work</a>
