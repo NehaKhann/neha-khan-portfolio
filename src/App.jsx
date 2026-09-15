@@ -64,36 +64,36 @@ const styles = `
     background-repeat: repeat;
   }
   .nk-star-1 {
-    background-image: radial-gradient(var(--text-faint) 1px, transparent 1px);
+    background-image: radial-gradient(var(--text-faint) 2.2px, transparent 2.2px);
     background-size: 340px 380px;
     animation: nkTwinkle1 17s ease-in-out infinite;
     animation-delay: -3s;
   }
   .nk-star-2 {
-    background-image: radial-gradient(var(--text-faint) 1px, transparent 1px);
+    background-image: radial-gradient(var(--text-faint) 2.2px, transparent 2.2px);
     background-size: 460px 420px;
     background-position: 140px 60px;
     animation: nkTwinkle2 22s ease-in-out infinite;
     animation-delay: -9s;
   }
   .nk-star-3 {
-    background-image: radial-gradient(var(--text-faint) 0.8px, transparent 0.8px);
+    background-image: radial-gradient(var(--text-faint) 2px, transparent 2px);
     background-size: 300px 500px;
     background-position: 60px 260px;
     animation: nkTwinkle3 14s ease-in-out infinite;
     animation-delay: -6s;
   }
   .nk-star-4 {
-    background-image: radial-gradient(var(--text-faint) 1.2px, transparent 1.2px);
+    background-image: radial-gradient(var(--text-faint) 2.6px, transparent 2.6px);
     background-size: 520px 340px;
     background-position: 300px 140px;
     animation: nkTwinkle4 20s ease-in-out infinite;
     animation-delay: -13s;
   }
-  @keyframes nkTwinkle1 { 0%, 100% { opacity: 0.008; } 50% { opacity: 0.026; } }
-  @keyframes nkTwinkle2 { 0%, 100% { opacity: 0.006; } 50% { opacity: 0.022; } }
-  @keyframes nkTwinkle3 { 0%, 100% { opacity: 0.01; } 50% { opacity: 0.028; } }
-  @keyframes nkTwinkle4 { 0%, 100% { opacity: 0.007; } 50% { opacity: 0.024; } }
+  @keyframes nkTwinkle1 { 0%, 100% { opacity: 0.04; } 50% { opacity: 0.1; } }
+  @keyframes nkTwinkle2 { 0%, 100% { opacity: 0.032; } 50% { opacity: 0.085; } }
+  @keyframes nkTwinkle3 { 0%, 100% { opacity: 0.045; } 50% { opacity: 0.11; } }
+  @keyframes nkTwinkle4 { 0%, 100% { opacity: 0.035; } 50% { opacity: 0.09; } }
   .nk-glass {
     background: var(--bg-elev);
     border: 1px solid var(--border);
@@ -271,7 +271,7 @@ const styles = `
     .nk-card:hover, .nk-btn-primary:hover, .nk-social-icon:hover { transform: none; }
     .nk-fade-in { animation: none; opacity: 1; }
     .nk-mesh-blob { animation: none !important; }
-    .nk-star { animation: none !important; opacity: 0.015; }
+    .nk-star { animation: none !important; opacity: 0.06; }
   }
   a:focus-visible, button:focus-visible {
     outline: 2px solid var(--accent);
