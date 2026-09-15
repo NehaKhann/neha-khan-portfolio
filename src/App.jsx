@@ -642,7 +642,7 @@ export default function Portfolio() {
                   Background
                 </p>
                 <p style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
-                  I've spent my career in environments where mistakes are expensive — banking systems, production infrastructure — which shaped how I think about reliability before anything else. That instinct is what I bring into AI work: don't trust a system just because it sounds confident.
+                  I've spent my career in environments where mistakes are expensive — banking systems and production infrastructure. That experience shaped a core instinct: reliability comes first. I bring the same mindset to AI: never trust a system just because it sounds confident.
                 </p>
               </div>
               <div className="mb-6">
