@@ -24,7 +24,7 @@ const themes = {
   },
   light: {
     "--bg": "#F7F5F0", "--bg-elev": "#FFFFFF", "--bg-elev-2": "#EFEBE2",
-    "--border": "rgba(15,23,32,0.10)", "--border-hover": "rgba(15,23,32,0.22)",
+    "--border": "rgba(15,23,32,0.18)", "--border-hover": "rgba(15,23,32,0.32)",
     "--text": "#12181F", "--text-dim": "#4B5768", "--text-faint": "#687180",
     "--accent": "#6D4FE0", "--accent-soft": "rgba(109,79,224,0.10)",
     "--teal": "#0C7E71", "--teal-soft": "rgba(15,156,140,0.10)",
@@ -627,7 +627,7 @@ export default function Portfolio() {
               <div className="mb-6">
                 <p className="nk-mono text-xs mb-2" style={{ color: "var(--text-faint)" }}>Background</p>
                 <p style={{ color: "var(--text-dim)", lineHeight: 1.75, maxWidth: "56ch" }}>
-                  {yearsExp}+ years building enterprise systems in banking and product engineering — Core Java, Spring Boot, Quarkus, and the MERN stack.
+                  {yearsExp}+ years building enterprise systems in banking and product engineering — Core Java, Spring Boot, Quarkus, and JavaScript frameworks and libraries.
                 </p>
               </div>
               <div className="mb-6">
@@ -657,19 +657,24 @@ export default function Portfolio() {
                 <div style={{ position: "relative", marginBottom: "2.25rem" }}>
                   <div style={{ position: "absolute", left: "-30px", top: "5px", width: "12px", height: "12px", borderRadius: "50%", background: "var(--accent)", boxShadow: "0 0 0 4px var(--accent-soft)" }} />
                   <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)" }}>Full-Stack / Backend Engineer</h3>
-                  <p className="nk-mono text-xs mt-0.5 mb-2" style={{ color: "var(--text-faint)" }}>2022 — 2025</p>
+                  <p className="nk-mono text-xs mt-0.5 mb-2" style={{ color: "var(--text-faint)" }}>Feb 2022 — Nov 2025</p>
                   <p className="text-sm" style={{ color: "var(--text-dim)", lineHeight: 1.6 }}>
-                    Java, Spring Boot, Quarkus, Python, Vue.js &amp; React — banking and enterprise systems.
+                    Bytecorp, WOIT Solutions, Bank Al Habib, and SIBISOFT — Java, Spring Boot, Quarkus, Python, Vue.js &amp; React across banking and enterprise systems.
                   </p>
                 </div>
                 <div style={{ position: "relative" }}>
                   <div style={{ position: "absolute", left: "-30px", top: "5px", width: "12px", height: "12px", borderRadius: "50%", background: "var(--teal)", boxShadow: "0 0 0 4px var(--teal-soft)" }} />
                   <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)" }}>AI Engineer <span className="nk-mono" style={{ fontSize: "0.7rem", fontWeight: 500, color: "var(--teal)" }}>(self-directed)</span></h3>
-                  <p className="nk-mono text-xs mt-0.5 mb-2" style={{ color: "var(--text-faint)" }}>2025 — Present</p>
+                  <p className="nk-mono text-xs mt-0.5 mb-2" style={{ color: "var(--text-faint)" }}>Mid-2025 — Present, overlapping</p>
                   <p className="text-sm" style={{ color: "var(--text-dim)", lineHeight: 1.6 }}>
-                    Still deep in it — LLM fine-tuning and AI security today, retrieval-augmented generation on deck — {articles.length}+ articles published, {projects.length} projects shipped.
+                    Started alongside full-time engineering work, now the primary focus — LLM fine-tuning, AI security, and Python — retrieval-augmented generation on deck — {articles.length}+ articles published, {projects.length} projects shipped.
                   </p>
                 </div>
+              </div>
+              <div style={{ marginTop: "1.75rem", paddingTop: "1.25rem", borderTop: "1px solid var(--border)" }}>
+                <p className="text-sm" style={{ color: "var(--text-faint)", lineHeight: 1.6 }}>
+                  {yearsExp}+ years of engineering discipline, now applied to how I build and ship AI systems.
+                </p>
               </div>
             </div>
           </div>

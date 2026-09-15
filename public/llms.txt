@@ -1,6 +1,6 @@
 # Neha Khan — Software Engineer / AI Engineering
 
-> Portfolio site for Neha Khan, a full-stack software engineer with 3+ years building enterprise systems (Java, Spring Boot, MERN), now specializing in AI engineering: LLM fine-tuning and AI security.
+> Portfolio site for Neha Khan, a full-stack software engineer with 4+ years building enterprise systems (Java, Spring Boot, JavaScript), now specializing in AI engineering: LLM fine-tuning and AI security.
 
 - [Portfolio](https://neha-khan-portfolio-gamma.vercel.app/): Experience, projects, skills, certifications, and writing.
 - [GitHub](https://github.com/NehaKhann): Source code for deployed projects.

@@ -14,17 +14,10 @@ export const profile = {
 // so the number stays accurate without ever needing a manual update.
 export const careerStart = new Date(2022, 1, 1); // Feb 2022 — Bytecorp
 
-// Career break starting Dec 2025 (after Sibisoft) — experience is frozen as
-// of this date rather than continuing to climb while not employed. Update
-// or remove this once back in a role, ideally by adding the new start date
-// to the calculation instead of just deleting the freeze.
-const careerBreakStart = new Date(2025, 11, 1); // Dec 2025
-
 export function getYearsOfExperience(from = careerStart, to = new Date()) {
-  const effectiveTo = to < careerBreakStart ? to : careerBreakStart;
-  let years = effectiveTo.getFullYear() - from.getFullYear();
-  const monthDiff = effectiveTo.getMonth() - from.getMonth();
-  if (monthDiff < 0 || (monthDiff === 0 && effectiveTo.getDate() < from.getDate())) years--;
+  let years = to.getFullYear() - from.getFullYear();
+  const monthDiff = to.getMonth() - from.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && to.getDate() < from.getDate())) years--;
   return Math.max(years, 0);
 }
 
