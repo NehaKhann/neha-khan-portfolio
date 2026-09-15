@@ -327,60 +327,8 @@ function LanguageBar({ languages }) {
   );
 }
 
-function NetworkGraphic({ className = "" }) {
-  // A small, deliberately sparse node graph — a few labeled connections
-  // rather than a dense mesh, so it reads as a diagram, not noise.
-  const x1 = 30, x2 = 230, x3 = 430;
-  const layer1 = [60, 400];
-  const layer2 = [40, 230, 420];
-  const layer3 = [80, 400];
-  const links = [
-    [x1, layer1[0], x2, layer2[0]],
-    [x1, layer1[0], x2, layer2[1]],
-    [x1, layer1[1], x2, layer2[1]],
-    [x1, layer1[1], x2, layer2[2]],
-    [x2, layer2[0], x3, layer3[0]],
-    [x2, layer2[1], x3, layer3[0]],
-    [x2, layer2[1], x3, layer3[1]],
-    [x2, layer2[2], x3, layer3[1]],
-  ];
-
-  return (
-    <svg viewBox="0 0 460 460" className={className} style={{ width: "100%", height: "100%", overflow: "visible" }} aria-hidden="true">
-      <defs>
-        <filter id="nkGlowTeal" x="-150%" y="-150%" width="400%" height="400%">
-          <feDropShadow dx="0" dy="0" stdDeviation="7" floodColor="var(--teal)" floodOpacity="0.85" />
-        </filter>
-        <filter id="nkGlowAccent" x="-150%" y="-150%" width="400%" height="400%">
-          <feDropShadow dx="0" dy="0" stdDeviation="7" floodColor="var(--accent)" floodOpacity="0.85" />
-        </filter>
-      </defs>
-      {links.map(([lx1, ly1, lx2, ly2], i) => (
-        <line key={i} x1={lx1} y1={ly1} x2={lx2} y2={ly2} stroke="var(--border-hover)" strokeWidth="1" opacity="0.5" />
-      ))}
-      {/* signal-flow accent lines */}
-      <line x1={x1} y1={layer1[0]} x2={x2} y2={layer2[1]} stroke="var(--teal)" strokeWidth="1.5" strokeDasharray="6 10" opacity="0.8">
-        <animate attributeName="stroke-dashoffset" from="0" to="-32" dur="1.6s" repeatCount="indefinite" />
-      </line>
-      <line x1={x2} y1={layer2[1]} x2={x3} y2={layer3[1]} stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="6 10" opacity="0.8">
-        <animate attributeName="stroke-dashoffset" from="0" to="-32" dur="2s" repeatCount="indefinite" />
-      </line>
-
-      {layer1.map((y, i) => <circle key={`n1-${i}`} cx={x1} cy={y} r="6" fill="var(--text-faint)" />)}
-      {layer2.map((y, i) => (
-        <circle key={`n2-${i}`} cx={x2} cy={y} r={i === 1 ? 8 : 6}
-          fill={i === 1 ? "var(--teal)" : "var(--text-faint)"}
-          filter={i === 1 ? "url(#nkGlowTeal)" : undefined} />
-      ))}
-      {layer3.map((y, i) => (
-        <circle key={`n3-${i}`} cx={x3} cy={y} r="8" fill="var(--accent)" filter="url(#nkGlowAccent)" />
-      ))}
-    </svg>
-  );
-}
-
-// Option 2 hero background — ambient blurred color shapes instead of a
-// literal diagram. Colors ride the theme variables so they adapt automatically.
+// Ambient hero background — soft blurred color shapes instead of a literal
+// diagram. Colors ride the theme variables so they adapt automatically.
 function GradientMesh({ className = "" }) {
   return (
     <div className={className} style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }} aria-hidden="true">
@@ -408,27 +356,13 @@ function getInitialTheme() {
   return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
 }
 
-// Temporary — hero background A/B toggle, driven by ?hero=network|mesh so
-// each option is directly linkable. Remove once one variant is chosen.
-function getInitialHeroVariant() {
-  if (typeof window === "undefined") return "network";
-  const param = new URLSearchParams(window.location.search).get("hero");
-  return param === "mesh" ? "mesh" : "network";
-}
-
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
   const [activeSection, setActiveSection] = useState("about");
   const [activeCategory, setActiveCategory] = useState("All");
-  const [heroVariant, setHeroVariant] = useState(getInitialHeroVariant);
   useEffect(() => { document.body.style.margin = "0"; }, []);
   useEffect(() => { window.localStorage.setItem("nk-theme", theme); }, [theme]);
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    url.searchParams.set("hero", heroVariant);
-    window.history.replaceState({}, "", url);
-  }, [heroVariant]);
 
   const sections = [["#about", "About"], ["#experience", "Experience"], ["#projects", "Projects"], ["#skills", "Skills"], ["#contact", "Contact"]];
 
@@ -526,31 +460,7 @@ export default function Portfolio() {
       {/* HERO */}
       <section className="nk-glow-violet" style={{ position: "relative", overflow: "hidden" }}>
         <div className="max-w-6xl mx-auto px-6 pt-24 pb-28 md:pt-32 md:pb-36" style={{ position: "relative" }}>
-          {heroVariant === "network" ? (
-            <div style={{ position: "absolute", top: "6%", right: "3%", opacity: 0.9, pointerEvents: "none" }} className="hidden lg:block w-[34%] h-[80%] xl:w-[40%] xl:h-[88%] 2xl:w-[46%] 2xl:h-[92%]">
-              <NetworkGraphic />
-            </div>
-          ) : (
-            <GradientMesh className="hidden lg:block" />
-          )}
-          {/* Temporary A/B toggle for comparing hero backgrounds — remove once one is chosen */}
-          <div className="hidden lg:flex" style={{ position: "absolute", top: "12px", right: "12px", zIndex: 5, gap: "6px" }}>
-            {["network", "mesh"].map((variant) => (
-              <button
-                key={variant}
-                onClick={() => setHeroVariant(variant)}
-                className="nk-mono"
-                style={{
-                  fontSize: "0.65rem", padding: "4px 10px", borderRadius: "12px", cursor: "pointer",
-                  border: `1px solid ${heroVariant === variant ? "var(--accent)" : "var(--border)"}`,
-                  background: heroVariant === variant ? "var(--accent-soft)" : "var(--bg-elev)",
-                  color: heroVariant === variant ? "var(--accent)" : "var(--text-faint)",
-                }}
-              >
-                {variant === "network" ? "Network" : "Mesh"}
-              </button>
-            ))}
-          </div>
+          <GradientMesh className="hidden lg:block" />
           <div className="nk-fade-in flex flex-wrap items-center justify-between gap-4 mb-8">
             <div className="flex items-center gap-3">
               <Avatar />
