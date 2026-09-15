@@ -33,11 +33,11 @@ export function getHeroStats(years) {
 }
 
 export const experience = [
-  { company: "SIBISOFT", role: "Software Engineer I", period: "Oct 2024 — Nov 2025",
-    tags: ["Java", "Spring Boot", "TypeScript"],
+  { company: "SIBISOFT", role: "Associate Software Engineer → Software Engineer I", period: "Oct 2024 — Nov 2025",
+    tags: ["Java", "JSP/Struts/JSF", "Spring Boot", "TypeScript", "Tomcat", "SQL Database", "Windows/Linux"],
     bullets: [
-      "Developed enterprise backend modules using Core Java and Spring Boot for business logic and database interactions",
-      "Built and maintained frontend components with JSP, Struts, JSF, PrimeFaces, and jQuery",
+      "Contributed to product-based software as part of the financial and infrastructure team, developing backend modules with Core Java and Spring Boot for business logic and database interactions",
+      "Built and maintained frontend components with JSP, Struts, JSF, PrimeFaces, and jQuery, deployed on Apache Tomcat",
       "Modernized legacy components by migrating selected Java modules to TypeScript, improving maintainability",
       "Optimized MySQL queries and supported Windows-to-Linux migration efforts",
     ] },
