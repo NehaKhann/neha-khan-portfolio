@@ -87,7 +87,7 @@ export const projects = [
     github: "https://github.com/NehaKhann/springguard-backend", live: "https://springguard-frontend.vercel.app",
     screenshot: "/project-springguard.jpg" },
   { name: "AI Engineering Journey", size: "md", category: "AI/ML",
-    tagline: "A self-directed curriculum — LLM foundations, fine-tuning, LoRA/QLoRA/DoRA, quantization — with RAG and RLHF next. Documented weekly with published write-ups.",
+    tagline: "A self-directed curriculum — LLM foundations, fine-tuning, LoRA/QLoRA/DoRA, quantization — heading toward RAG and RLHF. Documented weekly with published write-ups.",
     tags: ["AI", "AI Engineering", "Deep Learning", "Fine-tuning", "Generative AI", "Hugging Face", "LLM", "LoRA", "Machine Learning", "Prompt Engineering", "Python", "PyTorch", "QLoRA", "Quantization", "RLHF", "Transformers"],
     languages: [
       { name: "Jupyter Notebook", pct: 88.5 }, { name: "Python", pct: 11.5 },
